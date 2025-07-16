@@ -3,20 +3,35 @@
 
 Bienvenido equipo a nuestro repositorio de desarrollo temporal.
 
-Fecha límite: 30/07/2025
+> **Fecha límite:** 30/07/2025
 
-### Cosas por hacer: 
+## Elenco:
+
 - **Arm**: Página principal del programa y lideracion del proyecto. 
 
-- **Dan**: Apartado de las mesas del restaurante y creación de la repo, una vez que el termine. 
+- **Dan**: Creación del repo. Apartado de las mesas del restaurante.
 
-- **Axe:**
-Menú con las imagenes de la comida.
+- **Axe:** Menú con las imagenes de la comida.
 
-- **Hect:**
-Asistente de problemas del grupo y cuando nos reunamos ayudará con su granito de arena en el Backend del proyecto.
+- **Hect:** Asistencia del técnica.
 
-- **Gab:** Creación de la base de Datos y las migraciones. 
+- **Gab:** Creación de la base de Datos. | Migraciones. 
 
-- **Die:**
-Asistencia.
+- **Die:** Asistencia.
+
+## Progreso: 
+
+### **Arm**:
+- [x] Organización.
+- [ ] Página principal. 
+
+### **Dan**:
+- [x] Creación del repo.
+- [ ] Apartado de las mesas del restaurante.
+
+### **Axe:**
+- [ ] Menú con las imagenes de la comida.
+
+### **Gab:**
+- [ ] Creación de la base de Datos
+- [ ] Migraciones. 
