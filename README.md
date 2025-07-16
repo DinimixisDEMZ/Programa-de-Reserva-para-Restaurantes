@@ -36,6 +36,7 @@ Bienvenido equipo a nuestro repositorio de desarrollo temporal.
 - [ ] Creación de la base de Datos
 - [ ] Migraciones. 
 
-Acceso a base de datos:
-User: admin
-Pass: Pepo234
+#### Acceso a base de datos:
+
+**User:** admin
+**Pass:** Pepo234
