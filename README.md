@@ -39,4 +39,4 @@ Bienvenido equipo a nuestro repositorio de desarrollo temporal.
 #### Acceso a base de datos:
 
 **User:** admin
-**Pass:** Pepo234
+**Pass:** Pepos234
