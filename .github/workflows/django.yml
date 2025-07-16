@@ -9,7 +9,7 @@ on:
 jobs:
   build:
 
-    runs-on: archlinux-latest
+    runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
       matrix:
