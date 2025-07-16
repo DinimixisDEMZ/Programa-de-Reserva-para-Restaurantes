@@ -63,7 +63,7 @@
 </head>
 <body>
     <div class="login-container">
-        <h2>Iniciar Sesion</h2>
+        <h2>Iniciar Sesión</h2>
         <form id="login-form">
             <label for="username">Usuario</label>
             <input type="text" id="username" required>
@@ -85,7 +85,7 @@
         const USER = 'admin';
         const PASS = '12345';
 
-        //Agregamos un evento al formulario para manejar el envio
+        //Agregamos un evento al formulario para manejar el envío
         loginForm.addEventListener('submit', function(event) {
             event.preventDefault(); //Previene el envio del formulario
             
@@ -95,11 +95,11 @@
 
             //Validamos las credenciales
             if (username === USER && password === PASS){
-                //Si las credenciales son correctas
+                //Sí las credenciales son correctas
                 errorMessage.style.color = 'green';
-                errorMessage.textContent = 'Inicio de sesion exitoso';
+                errorMessage.textContent = 'Inicio de sesión exitoso';
 
-                //Redireccionar a otra pagina
+                //Redireccionar a otra página
                 setTimeout(() => {
                     window.location.href = 'index.html';
                 }, 1000);
