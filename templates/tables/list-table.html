@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todas las mesas</title>
+</head>
+<body>
+    <ol>
+        {% for table in tables %}
+            <li><a href="{% url 'tables:delete' table.pk %}">{{table}}</a></li>
+        {% endfor %}
+    </ol>
+
+    
+</body>
+</html>
