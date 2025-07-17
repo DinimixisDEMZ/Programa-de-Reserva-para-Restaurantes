@@ -41,6 +41,9 @@ Bienvenido equipo a nuestro repositorio de desarrollo temporal.
 ### **Die**
 - [ ] Apoyo moral.
 
+### **Hector**
+- [ ] Lógista
+
 #### Acceso a base de datos:
 
 **User:** admin
