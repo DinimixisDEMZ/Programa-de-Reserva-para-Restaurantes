@@ -35,3 +35,8 @@ Bienvenido equipo a nuestro repositorio de desarrollo temporal.
 ### **Gab:**
 - [ ] Creación de la base de Datos
 - [ ] Migraciones. 
+
+#### Acceso a base de datos:
+
+**User:** admin
+**Pass:** Pepos234
