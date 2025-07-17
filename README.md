@@ -33,7 +33,7 @@ Bienvenido equipo a nuestro repositorio de desarrollo temporal.
 - [ ] Menú con las imagenes de la comida.
 
 ### **Gab:**
-- [ ] Creación de la base de Datos
+- [x] Creación de la base de Datos
 - [ ] Migraciones. 
 
 #### Acceso a base de datos:
