@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bella Italia - Reservas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --italian-green: #009246;
+            --italian-red: #ce2b37;
+            --italian-gold: #d4af37;
+            --cream: #faf8f5;
+            --warm-white: #ffffff;
+            --charcoal: #2c2c2c;
+            --olive: #6b7c32;
+            --terracotta: #c65d07;
+            --sage: #9caf88;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--cream) 0%, #f5f2ed 100%);
+            color: var(--charcoal);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--italian-green), var(--italian-red));
+            border-radius: 2px;
+        }
+
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--charcoal);
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            color: var(--olive);
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .header .tagline {
+            color: var(--italian-gold);
+            font-weight: 500;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .metric-card {
+            background: var(--warm-white);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--italian-green), var(--italian-gold), var(--italian-red));
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+        }
+
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .metric-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--olive);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-icon {
+            font-size: 1.5rem;
+            opacity: 0.8;
+        }
+
+        .metric-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .metric-value.green { color: var(--italian-green); }
+        .metric-value.red { color: var(--italian-red); }
+        .metric-value.yellow { color: var(--terracotta); }
+        .metric-value.blue { color: var(--olive); }
+
+        .tabs {
+            margin-bottom: 2rem;
+        }
+
+        .tab-list {
+            display: flex;
+            background: var(--warm-white);
+            border-radius: 20px;
+            padding: 0.5rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            border: 3px solid var(--italian-gold);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 1rem 2rem;
+            border: none;
+            background: transparent;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            color: var(--charcoal);
+            position: relative;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .tab-button.active {
+            background: linear-gradient(135deg, var(--italian-green), var(--olive));
+            color: white;
+            box-shadow: 0 4px 15px rgba(0,146,70,0.3);
+        }
+
+        .tab-button:hover:not(.active) {
+            background: var(--cream);
+            color: var(--italian-green);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background: var(--warm-white);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 2rem 2rem 1rem;
+            background: linear-gradient(135deg, var(--cream), var(--warm-white));
+            border-bottom: 2px solid var(--italian-gold);
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--charcoal);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-description {
+            color: var(--olive);
+            font-size: 1rem;
+            font-style: italic;
+        }
+
+        .card-content {
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: var(--charcoal);
+            font-size: 1rem;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            border: 2px solid #e8e5e0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--warm-white);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--italian-green);
+            box-shadow: 0 0 0 4px rgba(0,146,70,0.1);
+            background: var(--cream);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .button {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .button-primary {
+            background: linear-gradient(135deg, var(--italian-green), var(--olive));
+            color: white;
+            box-shadow: 0 4px 15px rgba(0,146,70,0.3);
+        }
+
+        .button-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,146,70,0.4);
+        }
+
+        .button-secondary {
+            background: var(--cream);
+            color: var(--charcoal);
+            border: 2px solid var(--italian-gold);
+        }
+
+        .button-secondary:hover {
+            background: var(--italian-gold);
+            color: white;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-green {
+            background: linear-gradient(135deg, var(--italian-green), var(--sage));
+            color: white;
+        }
+
+        .badge-yellow {
+            background: linear-gradient(135deg, var(--italian-gold), var(--terracotta));
+            color: white;
+        }
+
+        .badge-red {
+            background: linear-gradient(135deg, var(--italian-red), #a91b1b);
+            color: white;
+        }
+
+        .badge-outline {
+            background: transparent;
+            border: 2px solid var(--italian-gold);
+            color: var(--olive);
+        }
+
+        .tables-section {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .location-card {
+            background: var(--warm-white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .location-header {
+            background: linear-gradient(135deg, var(--italian-green), var(--olive));
+            color: white;
+            padding: 1.5rem 2rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tables-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem;
+        }
+
+        .table-item {
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 3px solid;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .table-item::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transform: scale(0);
+            transition: transform 0.3s ease;
+        }
+
+        .table-item:hover::before {
+            transform: scale(1);
+        }
+
+        .table-available {
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border-color: var(--italian-green);
+        }
+
+        .table-available:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,146,70,0.2);
+        }
+
+        .table-occupied {
+            background: linear-gradient(135deg, #fef2f2, #fee2e2);
+            border-color: var(--italian-red);
+            cursor: not-allowed;
+        }
+
+        .table-reserved {
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+            border-color: var(--italian-gold);
+            cursor: not-allowed;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .table-number {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--charcoal);
+        }
+
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+
+        .reservation-form {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-section {
+            background: var(--cream);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--italian-gold);
+        }
+
+        .form-section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--charcoal);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-legend {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--warm-white);
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .legend-dot.available { background: var(--italian-green); }
+        .legend-dot.reserved { background: var(--italian-gold); }
+        .legend-dot.occupied { background: var(--italian-red); }
+
+        .italian-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--italian-green), var(--italian-gold), var(--italian-red), transparent);
+            margin: 3rem 0;
+            border-radius: 1px;
+        }
+
+        .success-message {
+            background: linear-gradient(135deg, var(--italian-green), var(--sage));
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+
+        .table-info {
+            font-size: 0.9rem;
+            color: var(--olive);
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .tab-list {
+                flex-direction: column;
+                max-width: none;
+            }
+            
+            .tables-grid {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+            
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🍝 Restaurante Bella Italia</h1>
+            <p class="subtitle">Reservaciones</p>
+            <p class="tagline">Bienvenidos a la Tradición Italiana</p>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-header">
+                    <span class="metric-title">Mesas Disponibles</span>
+                    <span class="metric-icon">🟢</span>
+                </div>
+                <div class="metric-value green" id="available-tables">5</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-header">
+                    <span class="metric-title">Mesas Ocupadas</span>
+                    <span class="metric-icon">🔴</span>
+                </div>
+                <div class="metric-value red" id="occupied-tables">1</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-header">
+                    <span class="metric-title">Mesas Reservadas</span>
+                    <span class="metric-icon">🟡</span>
+                </div>
+                <div class="metric-value yellow" id="reserved-tables">2</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-header">
+                    <span class="metric-title">Reservas Hoy</span>
+                    <span class="metric-icon">📅</span>
+                </div>
+                <div class="metric-value blue" id="today-reservations">2</div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <div class="tab-list">
+                <button class="tab-button active" onclick="switchTab('tables')">🍷 Mesas</button>
+                <button class="tab-button" onclick="switchTab('new-reservation')">📝 Nueva Reserva</button>
+            </div>
+
+            <div id="tables" class="tab-content active">
+                <div class="status-legend">
+                    <div class="legend-item">
+                        <div class="legend-dot available"></div>
+                        <span>Disponible</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot reserved"></div>
+                        <span>Reservada</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot occupied"></div>
+                        <span>Ocupada</span>
+                    </div>
+                </div>
+                <div id="tables-map" class="tables-section"></div>
+            </div>
+
+            <div id="new-reservation" class="tab-content">
+                <div class="card reservation-form">
+                    <div class="card-header">
+                        <h3 class="card-title">📝 Nueva Reserva</h3>
+                        <p class="card-description">Crea una nueva reserva para nuestros huéspedes</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="success-message" id="success-message">
+                            ✅ ¡Reserva creada con éxito! Gracias por elegir nuestro restaurante.
+                        </div>
+                        
+                        <form id="reservation-form">
+                            <div class="form-section">
+                                <h4 class="form-section-title">👤 Información del Cliente</h4>
+                                <div class="grid grid-2">
+                                    <div class="form-group">
+                                        <label class="form-label" for="customer-name">Nombre Completo *</label>
+                                        <input type="text" id="customer-name" class="form-input" placeholder="Juan Pérez" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="customer-phone">Teléfono *</label>
+                                        <input type="tel" id="customer-phone" class="form-input" placeholder="+34 666 123 456" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="customer-email">Email</label>
+                                    <input type="email" id="customer-email" class="form-input" placeholder="juan.perez@email.com">
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h4 class="form-section-title">📅 Detalles de la Reserva</h4>
+                                <div class="grid grid-3">
+                                    <div class="form-group">
+                                        <label class="form-label" for="reservation-date">Fecha *</label>
+                                        <input type="date" id="reservation-date" class="form-input" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="reservation-time">Horario *</label>
+                                        <select id="reservation-time" class="form-select" required>
+                                            <option value="">Selecciona horario</option>
+                                            <optgroup label="🌅 Almuerzo">
+                                                <option value="12:00">12:00</option>
+                                                <option value="12:30">12:30</option>
+                                                <option value="13:00">13:00</option>
+                                                <option value="13:30">13:30</option>
+                                                <option value="14:00">14:00</option>
+                                                <option value="14:30">14:30</option>
+                                            </optgroup>
+                                            <optgroup label="🌙 Cena">
+                                                <option value="19:00">19:00</option>
+                                                <option value="19:30">19:30</option>
+                                                <option value="20:00">20:00</option>
+                                                <option value="20:30">20:30</option>
+                                                <option value="21:00">21:00</option>
+                                                <option value="21:30">21:30</option>
+                                                <option value="22:00">22:00</option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="reservation-guests">Comensales *</label>
+                                        <select id="reservation-guests" class="form-select" required>
+                                            <option value="">Número</option>
+                                            <option value="1">1 persona</option>
+                                            <option value="2">2 personas</option>
+                                            <option value="3">3 personas</option>
+                                            <option value="4">4 personas</option>
+                                            <option value="5">5 personas</option>
+                                            <option value="6">6 personas</option>
+                                            <option value="7">7 personas</option>
+                                            <option value="8">8 personas</option>
+                                            <option value="9">9 personas</option>
+                                            <option value="10">10 personas</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="table-selection" style="display: none;">
+                                    <label class="form-label" for="reservation-table">Mesa *</label>
+                                    <select id="reservation-table" class="form-select">
+                                        <option value="">Selecciona mesa</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h4 class="form-section-title">📋 Notas Especiales</h4>
+                                <div class="form-group">
+                                    <label class="form-label" for="reservation-notes">Solicitudes Particulares</label>
+                                    <textarea id="reservation-notes" class="form-textarea" placeholder="Alergias, celebraciones, preferencias culinarias, solicitudes especiales..."></textarea>
+                                </div>
+                            </div>
+
+                            <div class="italian-divider"></div>
+                            
+                            <button type="submit" class="button button-primary" style="width: 100%; font-size: 1.2rem; padding: 1.2rem;">
+                                🍝 Confirmar Reserva
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let c of cookies) {
+                    const cookie = c.trim();
+                    if (cookie.startsWith(name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.split('=')[1]);
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        // Datos iniciales
+        
+        let tables = {{ tables_data|safe }};
+        let reservations = {{ reservations_data|safe }};
+
+        let selectedTableId = null;
+
+        // Funciones de utilidad
+        function getStatusText(status) {
+            const statusMap = {
+                'available': 'Disponible',
+                'occupied': 'Ocupada',
+                'reserved': 'Reservada'
+            };
+            return statusMap[status] || status;
+        }
+
+        function getStatusClass(status) {
+            const classMap = {
+                'available': 'badge-green',
+                'occupied': 'badge-red',
+                'reserved': 'badge-yellow'
+            };
+            return classMap[status] || 'badge-outline';
+        }
+
+        // Funciones de navegación
+        function switchTab(tabName) {
+            // Ocultar todos los contenidos
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Desactivar todos los botones
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Mostrar el contenido seleccionado
+            document.getElementById(tabName).classList.add('active');
+            
+            // Activar el botón seleccionado manualmente
+            const activeButton = document.querySelector(`.tab-button[onclick*="${tabName}"]`);
+            if (activeButton) {
+                activeButton.classList.add('active');
+            }
+            
+            // Actualizar contenido según la pestaña
+            if (tabName === 'tables') {
+                updateTablesMap();
+            }
+        }
+
+        // Actualizar métricas
+        function updateMetrics() {
+            const availableTables = tables.filter(t => t.status === 'available').length;
+            const occupiedTables = tables.filter(t => t.status === 'occupied').length;
+            const reservedTables = tables.filter(t => t.status === 'reserved').length;
+            const todayReservations = reservations.filter(r => r.date === new Date().toISOString().split('T')[0]).length;
+
+            document.getElementById('available-tables').textContent = availableTables;
+            document.getElementById('occupied-tables').textContent = occupiedTables;
+            document.getElementById('reserved-tables').textContent = reservedTables;
+            document.getElementById('today-reservations').textContent = todayReservations;
+        }
+
+        // Actualizar mapa de mesas
+        function updateTablesMap() {
+            console.log("✅ Ejecutando updateTablesMap");
+            const tablesMap = document.getElementById('tables-map');
+            const groupedTables = tables.reduce((acc, table) => {
+                if (!acc[table.location]) {
+                    acc[table.location] = [];
+                }
+                acc[table.location].push(table);
+                return acc;
+            }, {});
+
+            const locationIcons = {
+                "Terraza Vista Mar": "🌊",
+                "Sala Principal": "🏛️",
+                "Jardín Privado": "🌿",
+                "Sala de Banquetes": "🎉",
+                "Bar Lounge": "🍸"
+            };
+
+            tablesMap.innerHTML = Object.entries(groupedTables).map(([location, locationTables]) => `
+                <div class="location-card">
+                    <div class="location-header">
+                        <span>${locationIcons[location] || "🍽️"}</span>
+                        <span>${location}</span>
+                    </div>
+                    <div class="tables-grid">
+                        ${locationTables.map(table => {
+                            const reservation = reservations.find(r => r.tableId === table.id && r.status === 'confirmed');
+                            return `
+                                <div class="table-item table-${table.status}" ${table.status === 'available' ? `onclick="selectTable(${table.id}, '${table.status}')"` : ''}>
+                                    <div class="table-header">
+                                        <span class="table-number">Mesa ${table.number}</span>
+                                        <span class="badge badge-outline">👥 ${table.capacity}</span>
+                                    </div>
+                                    <div style="margin-bottom: 1rem;">
+                                        <span class="badge ${getStatusClass(table.status)}">${getStatusText(table.status)}</span>
+                                    </div>
+                                    ${reservation ? `
+                                        <div class="table-info">
+                                            <div style="font-weight: 600;">${reservation.customerName}</div>
+                                            <div>${reservation.time} • ${reservation.guests} comensales</div>
+                                        </div>
+                                    ` : ''}
+                                    ${table.status === 'available' ? `
+                                        <div class="table-info">
+                                            <em>Haz clic para reservar</em>
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Seleccionar mesa y cambiar a nueva reserva
+        function selectTable(tableId, status) {
+            if (status === 'available') {
+                selectedTableId = tableId;
+                switchTabProgrammatically('new-reservation');
+                
+                // Pre-seleccionar la mesa en el formulario si hay huéspedes seleccionados
+                setTimeout(() => {
+                    updateTableOptions();
+                    if (document.getElementById('reservation-table').innerHTML.includes(`value="${tableId}"`)) {
+                        document.getElementById('reservation-table').value = tableId;
+                    }
+                }, 100);
+            }
+        }
+
+        function switchTabProgrammatically(tabName) {
+            // Ocultar todos los contenidos
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Desactivar todos los botones
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Mostrar el contenido seleccionado
+            document.getElementById(tabName).classList.add('active');
+            
+            // Activar el botón correspondiente
+            const buttons = document.querySelectorAll('.tab-button');
+            if (tabName === 'new-reservation') {
+                buttons[1].classList.add('active');
+            } else if (tabName === 'tables') {
+                buttons[0].classList.add('active');
+            }
+        }
+
+        // Gestión de reservas
+
+        function addReservation(formData) {
+            fetch('/reservations/api/reservar/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')  // Asegúrate de haber definido getCookie()
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    updateMetrics();
+                    updateTablesMap();
+                    console.log("✅ Reserva creada con éxito");
+                } else {
+                    alert("Error al reservar: " + data.error);
+                }
+            })
+            .catch(error => {
+                alert("Error en la solicitud: " + error);
+            });
+        }
+
+        function fetchLatestData(){
+            fetch('/reservations/api/estado/')
+                .then(res => res.json())
+                .then(data => {
+                    tables = data.tables;
+                    reservations = data.reservations;
+                    updateMetrics();
+                    updateTablesMap();
+                });
+        }
+
+        // Actualizar opciones de mesa según huéspedes
+        function updateTableOptions() {
+            const guests = parseInt(document.getElementById('reservation-guests').value);
+            const tableSelect = document.getElementById('reservation-table');
+            const tableSelection = document.getElementById('table-selection');
+            
+            if (!guests) {
+                tableSelection.style.display = 'none';
+                return;
+            }
+            
+            const availableTables = tables.filter(t => t.status === 'available' && t.capacity >= guests);
+            
+            tableSelect.innerHTML = '<option value="">Selecciona mesa</option>' +
+                availableTables.map(table => 
+                    `<option value="${table.id}">Mesa ${table.number} - ${table.capacity} personas (${table.location})</option>`
+                ).join('');
+            
+            // Si hay una mesa pre-seleccionada, seleccionarla
+            if (selectedTableId && availableTables.find(t => t.id === selectedTableId)) {
+                tableSelect.value = selectedTableId;
+            }
+            
+            tableSelection.style.display = 'block';
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Establecer fecha mínima como hoy
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('reservation-date').min = today;
+
+            // Formulario de nueva reserva
+            document.getElementById('reservation-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = {
+                    tableId: parseInt(document.getElementById('reservation-table').value),
+                    customerName: document.getElementById('customer-name').value,
+                    customerPhone: document.getElementById('customer-phone').value,
+                    customerEmail: document.getElementById('customer-email').value,
+                    date: document.getElementById('reservation-date').value,
+                    time: document.getElementById('reservation-time').value,
+                    guests: parseInt(document.getElementById('reservation-guests').value),
+                    notes: document.getElementById('reservation-notes').value
+                };
+                
+                if (!formData.customerName || !formData.customerPhone || !formData.date || 
+                    !formData.time || !formData.guests || !formData.tableId) {
+                    alert('Por favor completa todos los campos obligatorios');
+                    return;
+                }
+                
+                addReservation(formData);
+                fetchLatestData();
+
+                // Limpiar formulario
+                this.reset();
+                document.getElementById('table-selection').style.display = 'none';
+                
+                // Mostrar mensaje de éxito
+                const successMessage = document.getElementById('success-message');
+                successMessage.style.display = 'block';
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 5000);
+                
+                // Scroll al top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // Actualizar opciones de mesa cuando cambian los huéspedes
+            document.getElementById('reservation-guests').addEventListener('change', updateTableOptions);
+
+            // Inicializar la aplicación
+            updateTablesMap()
+            updateMetrics()
+        });
+    </script>
+</body>
+</html>
