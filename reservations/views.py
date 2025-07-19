@@ -1,12 +1,33 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import json
 from .models import Reservation
 from datetime import date
 from tables.models import Table,TableStatus
+from django.views import generic
+from reservations.models import Reservation
+from reservations.forms import ReservationForm
+
 
 # Create your views here.
+
+class CreateReservationView(
+    generic.CreateView
+):
+    queryset = Reservation.objects.all()
+    form_class = ReservationForm
+    template_name = 'reservaciones/create-reservation.html'
+    success_url = reverse_lazy('reservations:list')
+
+class ListReservationView(
+    generic.ListView
+):
+    queryset = Reservation.objects.all()
+    context_object_name = 'reservations'
+    template_name = 'reservaciones/list-reservation.html'
+
 
 @csrf_exempt
 def api_create_reservation(request):
