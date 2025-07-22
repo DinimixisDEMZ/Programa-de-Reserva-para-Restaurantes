@@ -25,7 +25,6 @@ urlpatterns = [
     path('reservations/',include('reservations.urls')),
     path('', views.login, name="login"),
     path('main/', views.main, name="main"),
-    path("polls/", include("polls.urls")),
     path("logout/", auth_views.LogoutView.as_view(), name='logout')
     
 ]
