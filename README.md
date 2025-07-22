@@ -28,6 +28,7 @@ Bienvenido equipo a nuestro repositorio de desarrollo temporal.
 
 ### **Dan**:
 - [x] Creación del repo.
+- [x] Hacer Offline Fronted
 - [ ] Apartado de las mesas del restaurante.
 - [ ] Gestión de notificación
 
