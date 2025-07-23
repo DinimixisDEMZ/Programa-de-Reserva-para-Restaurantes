@@ -1,10 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bella Italia - Auténtica Cocina Italiana</title>
-    <link rel="stylesheet" href="./css/all.min.css">
+    <link rel="stylesheet" href="{% static '/css/all.min.css' %}">
     <style>
         /* Variables de color */
         :root {
@@ -181,7 +182,7 @@
             height: 100vh;
             min-height: 800px;
             background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-                        url('./images/Sala.png') no-repeat center center/cover;
+                        url("{% static '/images/Sala.png' %}") no-repeat center center/cover;
             display: flex;
             align-items: center;
             color: var(--light);
@@ -719,13 +720,13 @@
                 <div class="about-image">
                     <div class="about-img-container">
                         <div class="about-img">
-                            <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Interior del restaurante">
+                            <img src="{% static '/images/salamaga.avif' %}" alt="Interior del restaurante">
                         </div>
                         <div class="about-img">
-                            <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Chef preparando pasta">
+                            <img src="{% static '/images/salamaga2.avif' %}" alt="Chef preparando pasta">
                         </div>
                         <div class="about-img">
-                            <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Plato de pasta">
+                            <img src="{% static '/images/salamaga3.avif' %}" alt="Plato de pasta">
                         </div>
                     </div>
                 </div>
@@ -744,7 +745,7 @@
             <div class="specialty-cards">
                 <div class="specialty-card">
                     <div class="specialty-img">
-                        <img src="./images/pasticho.png" alt="Lasaña Bolognesa">
+                        <img src="{% static '/images/pasticho.png' %}" alt="Lasaña Bolognesa">
                     </div>
                     <div class="specialty-content">
                         <h3>Lasaña Bolognesa</h3>
@@ -755,7 +756,7 @@
                 
                 <div class="specialty-card">
                     <div class="specialty-img">
-                        <img src="./images/Risotto.png" alt="Risotto al Tartufo">
+                        <img src="{% static '/images/Risotto.png' %}" alt="Risotto al Tartufo">
                     </div>
                     <div class="specialty-content">
                         <h3>Risotto al Tartufo</h3>
@@ -766,7 +767,7 @@
                 
                 <div class="specialty-card">
                     <div class="specialty-img">
-                        <img src="./images/Osso.png" alt="Osso Buco alla Milanese">
+                        <img src="{% static '/images/Osso.png' %}" alt="Osso Buco alla Milanese">
                     </div>
                     <div class="specialty-content">
                         <h3>Osso Buco alla Milanese</h3>
@@ -788,42 +789,42 @@
             
             <div class="gallery-grid">
                 <div class="gallery-item">
-                    <img src="./images/Rico.png" alt="Plato italiano">
+                    <img src="{% static '/images/Rico.png' %}" alt="Plato italiano">
                     <div class="gallery-overlay">
                         <i class="fas fa-search-plus"></i>
                     </div>
                 </div>
                 
                 <div class="gallery-item">
-                    <img src='./images/Pastica.jpeg' alt="Pasta fresca">
+                    <img src='{% static "/images/Pastica.jpeg" %}' alt="Pasta fresca">
                     <div class="gallery-overlay">
                         <i class="fas fa-search-plus"></i>
                     </div>
                 </div>
                 
                 <div class="gallery-item">
-                    <img src='./images/Pizzita.jpeg' alt="Pizza artesanal">
+                    <img src='{% static "/images/Pizzita.jpeg" %}' alt="Pizza artesanal">
                     <div class="gallery-overlay">
                         <i class="fas fa-search-plus"></i>
                     </div>
                 </div>
                 
                 <div class="gallery-item">
-                    <img src="./images/BromaLoca.jpeg" alt="Tiramisú">
+                    <img src="{% static '/images/BromaLoca.jpeg' %}" alt="Tiramisú">
                     <div class="gallery-overlay">
                         <i class="fas fa-search-plus"></i>
                     </div>
                 </div>
                 
                 <div class="gallery-item">
-                    <img src="./images/Arroz.jpeg" alt="Vinos italianos">
+                    <img src="{% static '/images/Arroz.jpeg' %}" alt="Vinos italianos">
                     <div class="gallery-overlay">
                         <i class="fas fa-search-plus"></i>
                     </div>
                 </div>
                 
                 <div class="gallery-item">
-                    <img src="./images/Sala.png" alt="Ambiente del restaurante">
+                    <img src="{% static '/images/Sala.png' %}" alt="Ambiente del restaurante">
                     <div class="gallery-overlay">
                         <i class="fas fa-search-plus"></i>
                     </div>
