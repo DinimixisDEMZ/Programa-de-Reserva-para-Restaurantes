@@ -66,7 +66,7 @@
                     <div class="col">
                         <div class="card card-reservation h-100">
                             <div class="card-body d-flex flex-column justify-content-between">
-                                <h3 class="card-title text-primary mb-3">{{ reservation.customer_name }}</h3>
+                                <h3 class="card-title text-primary mb-3"><a href="{% url 'reservations:detail' reservation.pk %}">{{ reservation.customer_name }}</a></h3>
                                 <p class="card-text mb-1"><i class="bi bi-calendar-event me-2"></i>Fecha: <span class="fw-medium">{{ reservation.date }}</span></p>
                                 <p class="card-text mb-1"><i class="bi bi-clock me-2"></i>Hora: <span class="fw-medium">{{ reservation.time }}</span></p>
                                 <p class="card-text mb-1"><i class="bi bi-people me-2"></i>Personas: <span class="fw-medium">{{ reservation.guests }}</span></p>

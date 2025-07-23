@@ -41,6 +41,28 @@ class ListReservationView(
         else:
             return self.render_to_response(self.get_context_data(form=form))
 
+class UpdateReservationView(
+    generic.UpdateView
+):
+    queryset = Reservation.objects.all()
+    form_class = ReservationForm
+    template_name = 'reservaciones/update-reservations.html'
+    success_url = reverse_lazy('reservations:update')
+
+
+class DeleteReservationView(
+    generic.DeleteView
+):
+    queryset = Reservation.objects.all()
+    success_url = reverse_lazy('reservations:list')
+    
+
+
+class DetailReservationView(
+    generic.DetailView
+):
+    queryset = Reservation.objects.all()
+    template_name = 'reservaciones/detail-reservation.html'
 
 @csrf_exempt
 def api_create_reservation(request):
