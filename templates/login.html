@@ -64,55 +64,16 @@
 <body>
     <div class="login-container">
         <h2>Iniciar Sesión</h2>
-        <form id="login-form">
-            <label for="username">Usuario</label>
-            <input type="text" id="username" required>
-
-            <label for="password">Contraseña</label>
-            <input type="password" id="password" required>
-
+        <form id="login-form" method="POST">
+            {% csrf_token %}
+            {{form}}
             <button type="submit">Entrar</button>
         </form>
-        <p id="error-message"></p>
+        <p id="error-message">
+            {% if messages %}
+                {{message}}
+            {% endif %}
+        </p>
     </div>
-
-    <script>
-        // Obtenemos las referencias del DOM
-        const loginForm = document.getElementById('login-form');
-        const errorMessage = document.getElementById('error-message')
-
-        //Definimos las credenciales para acceder al Login
-        const USER = 'admin';
-        const PASS = '12345';
-
-        //Agregamos un evento al formulario para manejar el envío
-        loginForm.addEventListener('submit', function(event) {
-            event.preventDefault(); //Previene el envio del formulario
-            
-            //Obtenemos los valores ingresados por el usuario
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            //Validamos las credenciales
-            if (username === USER && password === PASS){
-                //Sí las credenciales son correctas
-                errorMessage.style.color = 'green';
-                errorMessage.textContent = 'Inicio de sesión exitoso';
-
-                //Redireccionar a otra página
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 1000);
-
-            } else{
-                //Si las credenciales son incorrectas
-                errorMessage.style.color = 'red';
-                errorMessage.textContent = 'Usuario o contraseña incorrectos';
-            }
-
-            //LImpiamos los campos del formulario luego de usar
-            loginForm.reset()
-        });
-    </script>
 </body>
 </html>

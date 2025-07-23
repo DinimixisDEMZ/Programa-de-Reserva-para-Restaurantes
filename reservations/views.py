@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
@@ -27,6 +27,19 @@ class ListReservationView(
     queryset = Reservation.objects.all()
     context_object_name = 'reservations'
     template_name = 'reservaciones/list-reservation.html'
+    
+    def get_context_data(self, **kwargs):  
+        context = super().get_context_data(**kwargs)
+        context['form'] = ReservationForm()
+        return context
+    
+    def post(self, request, *args, **kwargs):
+        form = ReservationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('reservations:list')
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
 
 
 @csrf_exempt

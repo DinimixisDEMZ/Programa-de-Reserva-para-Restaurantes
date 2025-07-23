@@ -52,10 +52,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-LOGIN_REDIRECT_URL = 'pagina principal'
-LOGIN_URL = 'login' #Nombre de la url del Login
-LOGOUT_URL = 'login'
-
 #Configuracion de sesion
 SESSION_COOKIE_AGE = 1209600
 SESSION_SAVE_EVERY_REQUEST = True
@@ -114,6 +110,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+LOGIN_REDIRECT_URL = 'reservations:list'
+LOGIN_URL = 'login' #Nombre de la url del Login
+LOGOUT_REDIRECT_URL = 'login'
+LOGOUT_URL = 'logout'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
