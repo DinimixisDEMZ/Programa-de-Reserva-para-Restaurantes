@@ -8,7 +8,11 @@
     <!-- Bootstrap CSS CDN -->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <!-- Bootstrap Icons CDN -->
+<<<<<<< HEAD
     <link rel="stylesheet" href="{% static 'font/bootstrap-icons.min.css'}">
+=======
+    <!--<link href="{% static 'font/bootstrap-icons.min.css' %}" rel="stylesheet" > -->
+>>>>>>> 56476c20d03f61dae0b4a5801000265e6ed4c43a
     <style>
         /* Estilos personalizados para complementar Bootstrap */
         body {
@@ -66,7 +70,7 @@
                     <div class="col">
                         <div class="card card-reservation h-100">
                             <div class="card-body d-flex flex-column justify-content-between">
-                                <h3 class="card-title text-primary mb-3">{{ reservation.customer_name }}</h3>
+                                <h3 class="card-title text-primary mb-3"><a href="{% url 'reservations:detail' reservation.pk %}">{{ reservation.customer_name }}</a></h3>
                                 <p class="card-text mb-1"><i class="bi bi-calendar-event me-2"></i>Fecha: <span class="fw-medium">{{ reservation.date }}</span></p>
                                 <p class="card-text mb-1"><i class="bi bi-clock me-2"></i>Hora: <span class="fw-medium">{{ reservation.time }}</span></p>
                                 <p class="card-text mb-1"><i class="bi bi-people me-2"></i>Personas: <span class="fw-medium">{{ reservation.guests }}</span></p>
@@ -103,6 +107,10 @@
     </main>
 
     <!-- Bootstrap Bundle con Popper -->
+<<<<<<< HEAD
     <script src="{% static '/js/bootstrap.bundle.min.js'}"></script>
+=======
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+>>>>>>> 56476c20d03f61dae0b4a5801000265e6ed4c43a
 </body>
 </html>
