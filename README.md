@@ -23,18 +23,27 @@ Bienvenido equipo a nuestro repositorio de desarrollo temporal.
 
 ### **Arm**:
 - [x] Organización.
-- [ ] Página principal. 
+- [x] Página principal. 
+- [ ] Lógica de las reservaciones
 
 ### **Dan**:
 - [x] Creación del repo.
+- [x] Hacer Offline Fronted
 - [ ] Apartado de las mesas del restaurante.
+- [ ] Gestión de notificación
 
 ### **Axe:**
 - [ ] Menú con las imagenes de la comida.
 
 ### **Gab:**
-- [ ] Creación de la base de Datos
+- [x] Creación de la base de Datos
 - [ ] Migraciones. 
+
+### **Die**
+- [ ] Apoyo moral.
+
+### **Hector**
+- [ ] Lógista
 
 #### Acceso a base de datos:
 

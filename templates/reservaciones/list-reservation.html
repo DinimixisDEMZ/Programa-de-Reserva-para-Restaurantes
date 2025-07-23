@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservaciones</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons CDN -->
+    <link rel="stylesheet" href="../font/bootstrap-icons.min.css">
+    <style>
+        /* Estilos personalizados para complementar Bootstrap */
+        body {
+            font-family: 'Inter', sans-serif; /* Usamos Inter como en las versiones anteriores */
+            background-color: #f8f9fa; /* Color de fondo claro */
+        }
+        .section-title {
+            font-size: 2.5rem; /* Tamaño de fuente para títulos de sección */
+            font-weight: 700; /* Negrita */
+            color: #343a40; /* Color de texto oscuro */
+            margin-bottom: 2.5rem; /* Margen inferior */
+        }
+        .card-reservation {
+            border-radius: 0.75rem; /* Bordes más redondeados */
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1); /* Sombra más pronunciada */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Transición suave para hover */
+        }
+        .card-reservation:hover {
+            transform: translateY(-5px); /* Pequeño levantamiento al pasar el mouse */
+            box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15); /* Sombra más grande al pasar el mouse */
+        }
+        .form-control-custom {
+            border-radius: 0.5rem; /* Bordes redondeados para inputs */
+            padding: 0.75rem 1rem; /* Padding para inputs */
+        }
+        .btn-primary-custom {
+            background-color: #0d6efd; /* Azul primario de Bootstrap */
+            border-color: #0d6efd;
+            border-radius: 2rem; /* Botón redondeado */
+            padding: 0.75rem 2rem; /* Padding para el botón */
+            font-weight: 600; /* Negrita */
+            transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+        }
+        .btn-primary-custom:hover {
+            background-color: #0b5ed7; /* Azul más oscuro al pasar el mouse */
+            border-color: #0a58ca;
+        }
+        .btn-action-sm {
+            padding: 0.375rem 0.75rem; /* Padding para botones de acción pequeños */
+            font-size: 0.875rem; /* Tamaño de fuente más pequeño */
+            border-radius: 0.5rem; /* Bordes redondeados */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Contenedor Principal de Contenido -->
+    <main class="container py-5">
+
+        <!-- Sección "Mis Reservaciones" -->
+        <section id="reservations" class="mb-5">
+            <h2 class="text-center section-title">Mis Reservaciones</h2>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                <!-- Bucle para mostrar cada reservación -->
+                {% for reservation in reservations %}
+                    <div class="col">
+                        <div class="card card-reservation h-100">
+                            <div class="card-body d-flex flex-column justify-content-between">
+                                <h3 class="card-title text-primary mb-3">{{ reservation.name }}</h3>
+                                <p class="card-text mb-1"><i class="bi bi-calendar-event me-2"></i>Fecha: <span class="fw-medium">{{ reservation.date }}</span></p>
+                                <p class="card-text mb-1"><i class="bi bi-clock me-2"></i>Hora: <span class="fw-medium">{{ reservation.time }}</span></p>
+                                <p class="card-text mb-1"><i class="bi bi-people me-2"></i>Personas: <span class="fw-medium">{{ reservation.guests }}</span></p>
+                                <p class="card-text mb-4"><i class="bi bi-geo-alt me-2"></i>Mesa: <span class="fw-medium">{{ reservation.tableNumber }}</span></p>
+                                <div class="d-flex justify-content-end space-x-2">
+                                    <button class="btn btn-primary btn-action-sm me-2">Editar</button>
+                                    <button class="btn btn-danger btn-action-sm">Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <!-- Mensaje si no hay reservaciones -->
+                    <div class="col-12">
+                        <p class="text-center text-muted fs-5">No tienes reservaciones pendientes. ¡Haz una ahora!</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Sección "Hacer una Nueva Reservación" (Formulario) -->
+        <section id="make-reservation" class="bg-white rounded-3 shadow-lg p-4 p-md-5">
+            <h2 class="text-center section-title">Hacer una Nueva Reservación</h2>
+            <form class="mx-auto" style="max-width: 600px;">
+                <div class="row g-4 mb-4">
+                    <div class="col-12 col-md-6">
+                        <label for="name" class="form-label fw-bold">Nombre Completo</label>
+                        <input type="text" id="name" name="name" class="form-control form-control-custom" placeholder="Tu nombre">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label for="date" class="form-label fw-bold">Fecha</label>
+                        <input type="date" id="date" name="date" class="form-control form-control-custom">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label for="time" class="form-label fw-bold">Hora</label>
+                        <input type="time" id="time" name="time" class="form-control form-control-custom">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label for="guests" class="form-label fw-bold">Número de Personas</label>
+                        <input type="number" id="guests" name="guests" min="1" class="form-control form-control-custom" placeholder="Ej: 4">
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="comments" class="form-label fw-bold">Comentarios Adicionales (Opcional)</label>
+                    <textarea id="comments" name="comments" rows="4" class="form-control form-control-custom" placeholder="Necesidades especiales, preferencias de mesa, etc."></textarea>
+                </div>
+                <!-- Botón para confirmar la reservación -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-primary-custom" onclick="window.location.href=" >Reservar Mesa</button>
+                </div>
+            </form>
+        </section>
+
+    </main>
+
+    <!-- Bootstrap Bundle con Popper -->
+    <script src="../js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

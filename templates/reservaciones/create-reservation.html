@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Reservación</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons CDN -->
+    <link rel="stylesheet" href="../font/bootstrap-icons.min.css">
+    <!-- Inter Font para una tipografía limpia y legible -->
+    <link rel="stylesheet" href="../font/css2.css">
+    <style>
+        /* Estilos personalizados para complementar Bootstrap */
+        body {
+            font-family: 'Inter', sans-serif; /* Usamos Inter para consistencia */
+            background-color: #f8f9fa; /* Color de fondo claro */
+            min-height: 100vh; /* Asegura que el body ocupe toda la altura de la ventana */
+            display: flex; /* Habilita flexbox para el body */
+            justify-content: center; /* Centra el contenido horizontalmente */
+            align-items: center; /* Centra el contenido verticalmente */
+        }
+        .section-title {
+            font-size: 2.5rem; /* Tamaño de fuente para títulos de sección */
+            font-weight: 700; /* Negrita */
+            color: #343a40; /* Color de texto oscuro */
+            margin-bottom: 2.5rem; /* Margen inferior */
+        }
+        .form-control-custom {
+            border-radius: 0.5rem; /* Bordes redondeados para inputs */
+            padding: 0.75rem 1rem; /* Padding para inputs */
+        }
+        .btn-primary-custom {
+            background-color: #0d6efd; /* Azul primario de Bootstrap */
+            border-color: #0d6efd;
+            border-radius: 2rem; /* Botón redondeado */
+            padding: 0.75rem 2rem; /* Padding para el botón */
+            font-weight: 600; /* Negrita */
+            transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+        }
+        .btn-primary-custom:hover {
+            background-color: #0b5ed7; /* Azul más oscuro al pasar el mouse */
+            border-color: #0a58ca;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Contenedor Principal de Contenido -->
+    <main class="container">
+
+        <!-- Sección "Crear Nueva Reservación" (Formulario) -->
+        <section id="create-reservation" class="bg-white rounded-3 shadow-lg p-4 p-md-5">
+            <h2 class="text-center section-title">Crear Nueva Reservación</h2>
+            <form method="POST" class="mx-auto" style="max-width: 600px;">
+                {% csrf_token %}
+                
+                <!--
+                    Nota: La variable `{{form}}` de Django renderiza los campos del formulario.
+                    Para aplicar estilos de Bootstrap directamente a estos campos (ej. `form-control`),
+                    es posible que necesites usar un template personalizado para el formulario de Django
+                    o una librería como `django-widget-tweaks` en tu backend.
+                    Aquí se asume que `{{form}}` generará la estructura básica de los campos.
+                -->
+                <div class="mb-4">
+                    {{form}}
+                </div>
+                
+                <!-- Botón para confirmar la reservación -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-primary-custom">Crear Reservación</button>
+                </div>
+            </form>
+        </section>
+
+    </main>
+
+    <!-- Bootstrap Bundle con Popper -->
+    <script src="../js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
