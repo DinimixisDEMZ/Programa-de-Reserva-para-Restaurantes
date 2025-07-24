@@ -13,7 +13,7 @@ Bienvenido equipo a nuestro repositorio de desarrollo temporal.
 
 - **Axe:** Menú con las imagenes de la comida.
 
-- **Hect:** Asistencia del técnica.
+- **Hec:** Asistencia del técnica.
 
 - **Gab:** Creación de la base de Datos. | Migraciones. 
 
@@ -30,10 +30,11 @@ Bienvenido equipo a nuestro repositorio de desarrollo temporal.
 - [x] Creación del repo.
 - [x] Hacer Offline Fronted
 - [x] Apartado de las mesas del restaurante.
-~~ - [ ] Gestión de notificación ~~
+- [ ] ~~ Gestión de notificación ~~
 
 ### **Axe:**
 - [x] Menú con las imagenes de la comida.
+- [x] Menú de platillos
 
 ### **Gab:**
 - [x] Creación de la base de Datos
@@ -41,10 +42,10 @@ Bienvenido equipo a nuestro repositorio de desarrollo temporal.
 - [ ] Migraciones. 
 
 ### **Die**
-- [x] Apoyo moral.
+- [x] Apoyo y contacto.
 
-### **Hector**
-- [ ] Lógista
+### **Hec**
+- [ ] Lógista.
 
 #### Acceso a base de datos:
 
