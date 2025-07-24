@@ -29,18 +29,19 @@ Bienvenido equipo a nuestro repositorio de desarrollo temporal.
 ### **Dan**:
 - [x] Creación del repo.
 - [x] Hacer Offline Fronted
-- [ ] Apartado de las mesas del restaurante.
-- [ ] Gestión de notificación
+- [x] Apartado de las mesas del restaurante.
+~~ - [ ] Gestión de notificación ~~
 
 ### **Axe:**
-- [ ] Menú con las imagenes de la comida.
+- [x] Menú con las imagenes de la comida.
 
 ### **Gab:**
 - [x] Creación de la base de Datos
+- [x] Página de las Mesas 
 - [ ] Migraciones. 
 
 ### **Die**
-- [ ] Apoyo moral.
+- [x] Apoyo moral.
 
 ### **Hector**
 - [ ] Lógista
