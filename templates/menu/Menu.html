@@ -1,0 +1,325 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú de Comida Italiana</title>
+    <link rel="stylesheet" href="{% static 'css/menu.css' %}">
+</head>
+<body>
+    <div class="menu-container">
+        <h1>Menú Italiano</h1>
+
+        <div class="menu-category">
+            <h2>Pizzas</h2>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-info">
+                        <h3>Pizza Hawaiana</h3>
+                        <p>La clásica pizza Hawaiana con una base de salsa de tomate San Marzano, mozzarella fresca de búfala derretida, hojas de albahaca fresca y un toque de aceite de oliva virgen extra, Y piñas recien recolectadas de Costa ricas. ¡Simple y deliciosa!</p>
+                    </div>
+                    <span class="item-price">$12.00</span>
+                    <input type="number" min="0" value="0" class="item-quantity" data-item-name="Pizza Hawaiana" data-item-price="12.00">
+                </div>
+                <img src="{% static 'images/Hawai.jpg' %}" alt="Una deliciosa Pizza Hawaiana con tomate, mozzarella y Piña.">
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-info">
+                        <h3>Pizza Pepperoni</h3>
+                        <p>Nuestra versión de la popular pizza con una generosa capa de salsa de tomate, abundante mozzarella derretida y rodajas de pepperoni picante que se curvan y se vuelven crujientes al hornearse.</p>
+                    </div>
+                    <span class="item-price">$14.50</span>
+                    <input type="number" min="0" value="0" class="item-quantity" data-item-name="Pizza Pepperoni" data-item-price="14.50">
+                </div>
+                <img src="{% static 'images/Pizza.jpg' %}" alt="Pizza de Pepperoni con rodajas de salami picante.">
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-info">
+                        <h3>Pizza Cuatro Quesos</h3>
+                        <p>Una armoniosa mezcla de cuatro quesos italianos: la suave mozzarella, el picante gorgonzola, el salado parmesano y el cremoso provolone, todo sobre una base crujiente.</p>
+                    </div>
+                    <span class="item-price">$15.00</span>
+                    <input type="number" min="0" value="0" class="item-quantity" data-item-name="Pizza Cuatro Quesos" data-item-price="15.00">
+                </div>
+                <img src="{% static 'images/cuatro quesos.jpeg' %}" alt="Pizza con cuatro tipos de quesos fundidos.">
+            </div>
+        </div>
+
+        <div class="menu-category">
+            <h2>Lasañas</h2>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-info">
+                        <h3>Lasaña Clásica Boloñesa</h3>
+                        <p>Capas de pasta fresca casera intercaladas con nuestro rico ragú de carne cocinado a fuego lento, una suave salsa bechamel y queso parmesano gratinado a la perfección. Un clásico reconfortante.</p>
+                    </div>
+                    <span class="item-price">$16.50</span>
+                    <input type="number" min="0" value="0" class="item-quantity" data-item-name="Lasaña Clásica Boloñesa" data-item-price="16.50">
+                </div>
+                <img src="{% static 'images/descarga.jpeg' %}" alt="Porción de Lasaña Clásica Boloñesa.">
+            </div>
+             <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-info">
+                        <h3>Lasaña de Verduras</h3>
+                        <p>Una opción ligera y deliciosa con capas de pasta fresca, vegetales de temporada asados (calabacín, berenjena, pimientos), espinacas y una cremosa salsa de tomate y ricotta.</p>
+                    </div>
+                    <span class="item-price">$15.00</span>
+                    <input type="number" min="0" value="0" class="item-quantity" data-item-name="Lasaña de Verduras" data-item-price="15.00">
+                </div>
+                <img src="{% static 'images/verduras.jpeg' %}" alt="Lasaña de verduras con capas de vegetales.">
+            </div>
+        </div>
+
+        <div class="menu-category">
+            <h2>Sopas Italianas</h2>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-info">
+                        <h3>Sopa Minestrone</h3>
+                        <p>Una sopa italiana robusta y saludable, llena de vegetales frescos de temporada, pasta pequeña, frijoles y un caldo rico en tomate. Ideal para calentar el alma.</p>
+                    </div>
+                    <span class="item-price">$8.00</span>
+                    <input type="number" min="0" value="0" class="item-quantity" data-item-name="Sopa Minestrone" data-item-price="8.00">
+                </div>
+                <img src="{% static 'images/Sopa ministrone.jpeg' %}" alt="Un tazón de sopa Minestrone.">
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-info">
+                        <h3>Sopa Pasta e Fagioli</h3>
+                        <p>La clásica sopa rústica italiana con pasta ditalini, frijoles cannellini y un sabroso caldo a base de tomate y hierbas. Reconfortante y llena de sabor.</p>
+                    </div>
+                    <span class="item-price">$7.50</span>
+                    <input type="number" min="0" value="0" class="item-quantity" data-item-name="Sopa Pasta e Fagioli" data-item-price="7.50">
+                </div>
+                <img src="{% static 'images/Fagioli.jpeg' %}" alt="Un tazón de sopa Pasta e Fagioli.">
+            </div>
+        </div>
+
+        <div class="menu-category">
+            <h2>Pastas</h2>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-info">
+                        <h3>Spaghetti Carbonara</h3>
+                        <p>Auténtica carbonara preparada con spaghetti al dente, yemas de huevo cremosas, guanciale crujiente (papada de cerdo curada) y abundante queso Pecorino Romano rallado. Sin nata, ¡como en Roma!</p>
+                    </div>
+                    <span class="item-price">$13.50</span>
+                    <input type="number" min="0" value="0" class="item-quantity" data-item-name="Spaghetti Carbonara" data-item-price="13.50">
+                </div>
+                <img src="{% static 'images/Carbonada.jpeg' %}" alt="Plato de Spaghetti Carbonara con panceta y huevo.">
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-info">
+                        <h3>Fettuccine Alfredo</h3>
+                        <p>Fettuccine perfectamente cocido y cubierto con una lujosa salsa cremosa hecha con mantequilla de alta calidad y queso Parmigiano-Reggiano. Una delicia simple y rica.</p>
+                    </div>
+                    <span class="item-price">$12.75</span>
+                    <input type="number" min="0" value="0" class="item-quantity" data-item-name="Fettuccine Alfredo" data-item-price="12.75">
+                </div>
+                <img src="{% static 'images/Alfredo.jpg' %}" alt="Fettuccine Alfredo con salsa blanca cremosa.">
+            </div>
+        </div>
+
+        <div class="menu-category">
+            <h2>Bebidas</h2>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-info">
+                        <h3>Agua Mineral</h3>
+                        <p>Agua mineral natural con gas, directamente de los Alpes italianos. Refrescante y efervescente.</p>
+                    </div>
+                    <span class="item-price">$3.00</span>
+                    <input type="number" min="0" value="0" class="item-quantity" data-item-name="Agua Mineral" data-item-price="3.00">
+                </div>
+                <img src="{% static 'images/Agua.jpeg' %}" alt="Botella de agua mineral.">
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-info">
+                        <h3>Limonada Casera Italiana</h3>
+                        <p>Refrescante limonada hecha en casa con limones frescos sicilianos y un toque de menta.</p>
+                    </div>
+                    <span class="item-price">$4.50</span>
+                    <input type="number" min="0" value="0" class="item-quantity" data-item-name="Limonada Casera Italiana" data-item-price="4.50">
+                </div>
+                <img src="{% static 'imagesLimonada.jpeg' %}" alt="Vaso de limonada casera.">
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-info">
+                        <h3>Espresso Italiano</h3>
+                        <p>Café espresso intenso y aromático, perfecto para terminar una buena comida.</p>
+                    </div>
+                    <span class="item-price">$2.50</span>
+                    <input type="number" min="0" value="0" class="item-quantity" data-item-name="Espresso Italiano" data-item-price="2.50">
+                </div>
+                <img src="{% static 'imagescafe.jpeg' %}" alt="Taza de espresso italiano.">
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-info">
+                        <h3>Jugos Naturales</h3>
+                        <p>Un vaso de jugo natural (al llegar al local se le pedirá que especifique qué jugo va a necesitar).</p>
+                    </div>
+                    <span class="item-price">$4.00</span>
+                    <input type="number" min="0" value="0" class="item-quantity" data-item-name="Jugo Natural" data-item-price="4.00">
+                </div>
+                <img src="{% static 'imagesJugos.jpeg' %}" alt="Vaso de jugo natural.">
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-info">
+                        <h3>Coca-Cola</h3>
+                        <p>La clásica bebida refrescante con burbujas y su sabor inconfundible.</p>
+                    </div>
+                    <span class="item-price">$3.00</span>
+                    <input type="number" min="0" value="0" class="item-quantity" data-item-name="Coca-Cola" data-item-price="3.00">
+                </div>
+                <img src="{% static 'imagesCoca.jpeg' %}" alt="Vaso con Coca-Cola y hielo.">
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-info">
+                        <h3>Vino de la Casa (Copa)</h3>
+                        <p>Nuestra selección especial de vino tinto o blanco de la casa, perfecto para maridar con tu comida italiana.</p>
+                    </div>
+                    <span class="item-price">$10.00</span>
+                    <input type="number" min="0" value="0" class="item-quantity" data-item-name="Vino de la Casa" data-item-price="10.00">
+                </div>
+                <img src="{% static 'imagesVino.jpeg' %}" alt="Imagen de Vino de la Casa">
+            </div>
+        </div>
+
+        <div class="menu-category">
+            <h2>Postres</h2>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-info">
+                        <h3>Tiramisú</h3>
+                        <p>El postre italiano por excelencia. Capas de bizcochos de soletilla empapados en café espresso, crema suave de mascarpone, espolvoreado con cacao en polvo amargo.</p>
+                    </div>
+                    <span class="item-price">$7.00</span>
+                    <input type="number" min="0" value="0" class="item-quantity" data-item-name="Tiramisú" data-item-price="7.00">
+                </div>
+                <img src="{% static 'imagesTiramisu.jpg' %}" alt="Rebanada de Tiramisú con café y cacao.">
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-info">
+                        <h3>Panna Cotta</h3>
+                        <p>Un postre ligero y sedoso de nata cocida, servido con un vibrante coulis de frutos rojos casero que añade un toque de frescura y acidez.</p>
+                    </div>
+                    <span class="item-price">$6.50</span>
+                    <input type="number" min="0" value="0" class="item-quantity" data-item-name="Panna Cotta" data-item-price="6.50">
+                </div>
+                <img src="{% static 'imagesPannacota.jpg' %}" alt="Panna Cotta con salsa de frutos rojos.">
+            </div>
+        </div>
+
+        <div class="order-summary">
+            <h2>Tu Pedido</h2>
+            <ul id="order-list">
+                <li>No hay ítems seleccionados.</li>
+            </ul>
+            <div class="order-total" id="order-total">Total: $0.00</div>
+            <button class="order-button" onclick="placeOrder()">Realizar Pedido</button>
+            <button class="clear-order-button" onclick="clearOrder()">Reiniciar Pedido</button>
+        </div>
+    </div>
+
+    <script>
+     
+        let updateOrderSummary; 
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const quantityInputs = document.querySelectorAll('.item-quantity');
+            const orderList = document.getElementById('order-list');
+            const orderTotalElement = document.getElementById('order-total');
+
+            updateOrderSummary = () => { // Assign to the global variable
+                let total = 0;
+                let itemsOrdered = [];
+
+                quantityInputs.forEach(input => {
+                    const quantity = parseInt(input.value);
+                    if (quantity > 0) {
+                        const itemName = input.dataset.itemName;
+                        const itemPrice = parseFloat(input.dataset.itemPrice);
+                        const itemTotalPrice = quantity * itemPrice;
+                        total += itemTotalPrice;
+                        itemsOrdered.push({
+                            name: itemName,
+                            quantity: quantity,
+                            price: itemPrice,
+                            totalPrice: itemTotalPrice
+                        });
+                    }
+                });
+
+                orderList.innerHTML = ''; // Limpiar lista actual
+
+                if (itemsOrdered.length === 0) {
+                    orderList.innerHTML = '<li>No hay ítems seleccionados.</li>';
+                } else {
+                    itemsOrdered.forEach(item => {
+                        const listItem = document.createElement('li');
+                        listItem.innerHTML = `
+                            <span>${item.name} x${item.quantity}</span>
+                            <span>$${item.totalPrice.toFixed(2)}</span>
+                        `;
+                        orderList.appendChild(listItem);
+                    });
+                }
+
+                orderTotalElement.textContent = `Total: $${total.toFixed(2)}`;
+            };
+
+            quantityInputs.forEach(input => {
+                input.addEventListener('change', updateOrderSummary);
+                input.addEventListener('keyup', updateOrderSummary);
+            });
+
+            updateOrderSummary();
+        });
+
+        function placeOrder() {
+            const orderListItems = document.querySelectorAll('#order-list li');
+            const total = document.getElementById('order-total').textContent;
+
+            if (orderListItems.length === 1 && orderListItems[0].textContent === 'No hay ítems seleccionados.') {
+                alert('Por favor, selecciona al menos un ítem para realizar tu pedido.');
+                return;
+            }
+
+            let orderDetails = "Tu pedido:\n";
+            orderListItems.forEach(item => {
+                if (item.textContent !== 'No hay ítems seleccionados.') {
+                    orderDetails += `- ${item.textContent}\n`;
+                }
+            });
+            orderDetails += `\n${total}`;
+            alert(orderDetails + "\n\n¡Gracias por tu pedido!");
+        }
+
+        function clearOrder() {
+            const quantityInputs = document.querySelectorAll('.item-quantity');
+            quantityInputs.forEach(input => {
+                input.value = 0;
+            });
+            // Call the globally accessible updateOrderSummary function
+            if (typeof updateOrderSummary === 'function') {
+                updateOrderSummary();
+            } else {
+                console.error("updateOrderSummary is not defined or not a function.");
+            }
+            alert('El pedido ha sido reiniciado.');
+        }
+    </script>
+</body>
+</html>
