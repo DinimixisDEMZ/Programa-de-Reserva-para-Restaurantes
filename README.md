@@ -39,15 +39,10 @@ Bienvenido equipo a nuestro repositorio de desarrollo temporal.
 ### **Gab:**
 - [x] Creación de la base de Datos
 - [x] Página de las Mesas 
-- [ ] Migraciones. 
+- [x] Migraciones. 
 
 ### **Die**
 - [x] Apoyo y contacto.
 
 ### **Hec**
-- [ ] Lógista.
-
-#### Acceso a base de datos:
-
-**User:** admin
-**Pass:** Pepos234
+- [x] Lógista.
