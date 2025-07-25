@@ -21,5 +21,8 @@ urlpatterns = [
     path('main/', main, name="main"),
     path('logout/', LogoutView.as_view(
         next_page='login'  # Redirige al login después de logout
-    ), name="logout")
+    ), name="logout"),
+    
+    path('', include('menu.urls')), # Incluye las URLs de tu aplicación
+
 ]

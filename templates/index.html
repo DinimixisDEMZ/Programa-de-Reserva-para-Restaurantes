@@ -171,7 +171,7 @@
         .logout-form {
             display: inline;
         }
-        
+
         .logout-btn {
             background: none;
             border: none;
@@ -183,7 +183,7 @@
             font-family: 'Montserrat', sans-serif;
             font-size: 1rem;
         }
-        
+
         .logout-btn:after {
             content: '';
             position: absolute;
@@ -194,15 +194,15 @@
             background-color: var(--gold);
             transition: width 0.3s ease;
         }
-        
+
         .logout-btn:hover:after {
             width: 100%;
         }
-        
+
         .logout-btn i {
             margin-right: 5px;
         }
-        
+
         .login-link i {
             margin-right: 5px;
         }
@@ -218,7 +218,7 @@
         .hero {
             height: 100vh;
             min-height: 800px;
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
                         url("{% static '/images/Sala.png' %}") no-repeat center center/cover;
             display: flex;
             align-items: center;
@@ -357,6 +357,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
+            margin-bottom: 50px; /* Añadido margen inferior para separar de botón */
         }
 
         .specialty-card {
@@ -406,6 +407,18 @@
             font-size: 1.3rem;
             font-weight: 700;
             color: var(--primary);
+        }
+
+        /* Botón de menú completo */
+        .btn-custom-menu {
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            border-radius: 50px; /* Botón más redondeado */
+            margin-top: 30px; /* Espacio superior para el botón */
+            width: fit-content; /* Ajusta el ancho al contenido */
+            display: block; /* Para que margin: auto funcione y centre el botón */
+            margin-left: auto;
+            margin-right: auto;
         }
 
         /* Gallery Section */
@@ -708,15 +721,16 @@
         <div class="container">
             <nav class="navbar">
                 <a href="#" class="logo">Bella<span>Italia</span></a>
-                
+
                 <ul class="nav-links">
                     <li><a href="#home">Inicio</a></li>
                     <li><a href="#about">Nosotros</a></li>
                     <li><a href="#specialties">Especialidades</a></li>
+                    <li><a href="{% url 'menu' %}">Menú</a></li>
                     <li><a href="#gallery">Galería</a></li>
                     <li><a href="#contact">Contacto</a></li>
                     <li><a href="{% url 'reservations:list' %}">Reservas</a></li>
-                    
+
                     {% if user.is_authenticated %}
                     <li>
                         <form action="{% url 'logout' %}" method="post" class="logout-form">
@@ -730,7 +744,7 @@
                     <li><a href="{% url 'login' %}" class="login-link"><i class="fas fa-sign-in-alt"></i> Iniciar sesión</a></li>
                     {% endif %}
                 </ul>
-                
+
                 <div class="menu-toggle">
                     <i class="fas fa-bars"></i>
                 </div>
@@ -741,7 +755,7 @@
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="container">
-            <div class="hero-content">
+            <div class="hero-content title-center">
                 <h1>Sabores auténticos de Italia</h1>
                 <p>Descubre la verdadera esencia de la cocina italiana en un ambiente cálido y acogedor. Ingredientes frescos, recetas tradicionales y pasión en cada plato.</p>
                 <div class="hero-btns">
@@ -750,7 +764,7 @@
                 </div>
             </div>
         </div>
-        
+
         <a href="#about" class="scroll-down">
             <i class="fas fa-chevron-down"></i>
         </a>
@@ -767,17 +781,17 @@
                     <p>Cada ingrediente es cuidadosamente seleccionado, desde los tomates San Marzano hasta el aceite de oliva virgen extra de la región de Toscana. Nuestra pasta es artesanal, elaborada diariamente con harina italiana de la más alta calidad.</p>
                     <p>El ambiente en Bella Italia refleja la calidez y alegría característica de Italia, con un equipo que te hará sentir como en casa desde el primer momento.</p>
                 </div>
-                
+
                 <div class="about-image">
                     <div class="about-img-container">
                         <div class="about-img">
-                            <img src="{% static '/images/salamaga.avif' %}" alt="Interior del restaurante">
+                            <img src="{% static '/images/salamaga.avif' %}" alt="">
                         </div>
                         <div class="about-img">
-                            <img src="{% static '/images/salamaga2.avif' %}" alt="Chef preparando pasta">
+                            <img src="{% static '/images/salamaga2.avif' %}" alt="">
                         </div>
                         <div class="about-img">
-                            <img src="{% static '/images/salamaga3.avif' %}" alt="Plato de pasta">
+                            <img src="{% static '/images/salamaga3.avif' %}" alt="">
                         </div>
                     </div>
                 </div>
@@ -785,18 +799,18 @@
         </div>
     </section>
 
-    <!-- Specialties Section -->
+    <!-- Sección de Especialidades -->
     <section class="specialties" id="specialties">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Nuestras Especialidades</h2>
                 <p class="section-subtitle">Descubre los platos que han hecho famoso a nuestro restaurante, preparados con técnicas tradicionales y los mejores ingredientes importados directamente de Italia.</p>
             </div>
-            
+
             <div class="specialty-cards">
                 <div class="specialty-card">
                     <div class="specialty-img">
-                        <img src="{% static '/images/pasticho.png' %}" alt="Lasaña Bolognesa">
+                        <img src="{% static '/images/pasticho.png' %}" alt="">
                     </div>
                     <div class="specialty-content">
                         <h3>Lasaña Bolognesa</h3>
@@ -804,21 +818,22 @@
                         <div class="specialty-price">$18.50</div>
                     </div>
                 </div>
-                
+
                 <div class="specialty-card">
                     <div class="specialty-img">
-                        <img src="{% static '/images/Risotto.png' %}" alt="Risotto al Tartufo">
+                        <img src="{% static '/images/Risotto.png' %}" alt="">
                     </div>
                     <div class="specialty-content">
                         <h3>Risotto al Tartufo</h3>
-                        <p>Arroz arbóreo cremoso con trufa negra de Alba, vino blanco y queso parmesano reggiano.</p>
+                        <p>Arroz arbóreo cremoso con trufa negra de Alba, vino blanco y queso parmesano reggiano. Mmmmm, supremamente delicioso.
+                        </p>
                         <div class="specialty-price">$22.00</div>
                     </div>
                 </div>
-                
+
                 <div class="specialty-card">
                     <div class="specialty-img">
-                        <img src="{% static '/images/Osso.png' %}" alt="Osso Buco alla Milanese">
+                        <img src="{% static '/images/Osso.png' %}" alt="">
                     </div>
                     <div class="specialty-content">
                         <h3>Osso Buco alla Milanese</h3>
@@ -826,6 +841,13 @@
                         <div class="specialty-price">$26.50</div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Botón para ver el menú completo -->
+            <div class="text-center mt-5">
+                <a href="{% url 'menu' %}" class="btn btn-primary btn-lg btn-custom-menu">
+                    Ver Menú Completo
+                </a>
             </div>
         </div>
     </section>
@@ -837,45 +859,45 @@
                 <h2 class="section-title">Nuestra Cocina</h2>
                 <p class="section-subtitle">Un vistazo a nuestros platos más emblemáticos y al ambiente único de nuestro restaurante.</p>
             </div>
-            
+
             <div class="gallery-grid">
                 <div class="gallery-item">
-                    <img src="{% static '/images/Rico.png' %}" alt="Plato italiano">
+                    <img src="{% static '/images/Rico.png' %}" alt="">
                     <div class="gallery-overlay">
                         <i class="fas fa-search-plus"></i>
                     </div>
                 </div>
-                
+
                 <div class="gallery-item">
-                    <img src='{% static "/images/Pastica.jpeg" %}' alt="Pasta fresca">
+                    <img src='{% static "/images/Pastica.jpeg" %}' alt="">
                     <div class="gallery-overlay">
                         <i class="fas fa-search-plus"></i>
                     </div>
                 </div>
-                
+
                 <div class="gallery-item">
-                    <img src='{% static "/images/Pizzita.jpeg" %}' alt="Pizza artesanal">
+                    <img src='{% static "/images/Pizzita.jpeg" %}' alt="">
                     <div class="gallery-overlay">
                         <i class="fas fa-search-plus"></i>
                     </div>
                 </div>
-                
+
                 <div class="gallery-item">
-                    <img src="{% static '/images/BromaLoca.jpeg' %}" alt="Tiramisú">
+                    <img src="{% static '/images/BromaLoca.jpeg' %}" alt="">
                     <div class="gallery-overlay">
                         <i class="fas fa-search-plus"></i>
                     </div>
                 </div>
-                
+
                 <div class="gallery-item">
-                    <img src="{% static '/images/Arroz.jpeg' %}" alt="Vinos italianos">
+                    <img src="{% static '/images/Arroz.jpeg' %}" alt="">
                     <div class="gallery-overlay">
                         <i class="fas fa-search-plus"></i>
                     </div>
                 </div>
-                
+
                 <div class="gallery-item">
-                    <img src="{% static '/images/Sala.png' %}" alt="Ambiente del restaurante">
+                    <img src="{% static '/images/Sala.png' %}" alt="">
                     <div class="gallery-overlay">
                         <i class="fas fa-search-plus"></i>
                     </div>
@@ -891,7 +913,7 @@
                 <h2 class="section-title">Lo que dicen nuestros clientes</h2>
                 <p class="section-subtitle">Las experiencias de quienes han disfrutado de la auténtica cocina italiana en nuestro restaurante.</p>
             </div>
-            
+
             <div class="testimonial-slider">
                 <div class="testimonial">
                     <p class="testimonial-text">La mejor pasta que he probado fuera de Italia. La lasaña boloñesa es simplemente increíble, con sabores que te transportan directamente a Bolonia.</p>
@@ -916,7 +938,7 @@
                         <a href="#"><i class="fab fa-tripadvisor"></i></a>
                     </div>
                 </div>
-                
+
                 <div class="footer-col">
                     <h3>Horario</h3>
                     <ul class="footer-links">
@@ -925,7 +947,7 @@
                         <li>Domingo: 11:00 - 22:00</li>
                     </ul>
                 </div>
-                
+
                 <div class="footer-col">
                     <h3>Contacto</h3>
                     <ul class="contact-info">
@@ -943,7 +965,7 @@
                         </li>
                     </ul>
                 </div>
-                
+
                 <div class="footer-col">
                     <h3>Enlaces rápidos</h3>
                     <ul class="footer-links">
@@ -955,7 +977,7 @@
                     </ul>
                 </div>
             </div>
-            
+
             <div class="copyright">
                 <p>&copy; 2025 Bella Italia. Todos los derechos reservados.</p>
             </div>
@@ -994,10 +1016,10 @@
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     e.preventDefault();
-                    
+
                     const targetId = this.getAttribute('href');
                     const targetElement = document.querySelector(targetId);
-                    
+
                     if (targetElement) {
                         window.scrollTo({
                             top: targetElement.offsetTop - 80,
@@ -1028,7 +1050,7 @@
 
             let currentTestimonial = 0;
             const testimonialElement = document.querySelector('.testimonial');
-            
+
             function showTestimonial(index) {
                 const testimonial = testimonials[index];
                 testimonialElement.innerHTML = `
