@@ -7,7 +7,6 @@
     <title>Bella Italia - Auténtica Cocina Italiana</title>
     <link rel="stylesheet" href="{% static '/css/all.min.css' %}">
     <style>
-        /* Variables de color */
         :root {
             --primary: #E63946;
             --secondary: #F1FAEE;
@@ -19,7 +18,6 @@
             --text-light: #777777;
         }
 
-        /* Reset y estilos base */
         * {
             margin: 0;
             padding: 0;
@@ -168,6 +166,45 @@
 
         .nav-links a:hover:after {
             width: 100%;
+        }
+
+        .logout-form {
+            display: inline;
+        }
+        
+        .logout-btn {
+            background: none;
+            border: none;
+            color: var(--light);
+            font-weight: 600;
+            cursor: pointer;
+            padding: 5px 0;
+            position: relative;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+        }
+        
+        .logout-btn:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--gold);
+            transition: width 0.3s ease;
+        }
+        
+        .logout-btn:hover:after {
+            width: 100%;
+        }
+        
+        .logout-btn i {
+            margin-right: 5px;
+        }
+        
+        .login-link i {
+            margin-right: 5px;
         }
 
         .menu-toggle {
@@ -678,6 +715,20 @@
                     <li><a href="#specialties">Especialidades</a></li>
                     <li><a href="#gallery">Galería</a></li>
                     <li><a href="#contact">Contacto</a></li>
+                    <li><a href="{% url 'reservations:list' %}">Reservas</a></li>
+                    
+                    {% if user.is_authenticated %}
+                    <li>
+                        <form action="{% url 'logout' %}" method="post" class="logout-form">
+                            {% csrf_token %}
+                            <button type="submit" class="logout-btn">
+                                <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+                            </button>
+                        </form>
+                    </li>
+                    {% else %}
+                    <li><a href="{% url 'login' %}" class="login-link"><i class="fas fa-sign-in-alt"></i> Iniciar sesión</a></li>
+                    {% endif %}
                 </ul>
                 
                 <div class="menu-toggle">
@@ -932,9 +983,9 @@
                 navLinks.classList.toggle('active');
             });
 
-            // Close mobile menu when clicking a link
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                link.addEventListener('click', function() {
+            // Close mobile menu when clicking a link or button
+            document.querySelectorAll('.nav-links a, .logout-btn').forEach(element => {
+                element.addEventListener('click', function() {
                     navLinks.classList.remove('active');
                 });
             });

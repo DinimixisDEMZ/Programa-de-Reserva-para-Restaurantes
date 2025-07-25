@@ -1,0 +1,296 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Reservación #{{object.pk}} | Restaurante Elegante</title>
+    <!-- Bootstrap CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="{% static 'font/bootstrap-icons.min.css' %}">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #5e3a1f;
+            --secondary-color: #c8a97e;
+            --accent-color: #e8c284;
+            --light-bg: #f9f5f0;
+            --dark-text: #2a2118;
+            --light-text: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+        
+        .reservation-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        
+        .reservation-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .reservation-title {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .reservation-number {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+        
+        .reservation-body {
+            padding: 2rem;
+        }
+        
+        .detail-item {
+            display: flex;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+        
+        .detail-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--light-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+        }
+        
+        .detail-content {
+            flex: 1;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.2rem;
+            font-size: 0.9rem;
+        }
+        
+        .detail-value {
+            font-size: 1.1rem;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .status-confirmed {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .status-canceled {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(200, 169, 126, 0.2);
+        }
+        
+        .btn-edit {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+        
+        .btn-edit:hover {
+            background-color: #b5986b;
+            color: white;
+        }
+        
+        .btn-back {
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            border: 1px solid var(--secondary-color);
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+        
+        .btn-back:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .reservation-card {
+                margin: 1rem;
+            }
+            
+            .reservation-header {
+                padding: 1.5rem;
+            }
+            
+            .reservation-title {
+                font-size: 1.5rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .btn-edit, .btn-back {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="reservation-card">
+        <div class="reservation-header">
+            <h1 class="reservation-title">Reservación</h1>
+            <div class="reservation-number">#{{ object.pk }}</div>
+            <div class="mt-2">
+                <span class="status-badge status-{% if object.status == 1 %}confirmed{% else %}canceled{% endif %}">
+                    {% if object.status == 1 %}Confirmada{% else %}Cancelada{% endif %}
+                </span>
+            </div>
+        </div>
+        
+        <div class="reservation-body">
+            <div class="detail-item">
+                <div class="detail-icon">
+                    <i class="bi bi-person-fill"></i>
+                </div>
+                <div class="detail-content">
+                    <div class="detail-label">Cliente</div>
+                    <div class="detail-value">{{ object.customer_name }}</div>
+                </div>
+            </div>
+            
+            <div class="detail-item">
+                <div class="detail-icon">
+                    <i class="bi bi-calendar-date"></i>
+                </div>
+                <div class="detail-content">
+                    <div class="detail-label">Fecha</div>
+                    <div class="detail-value">{{ object.date|date:"l, d F Y" }}</div>
+                </div>
+            </div>
+            
+            <div class="detail-item">
+                <div class="detail-icon">
+                    <i class="bi bi-clock"></i>
+                </div>
+                <div class="detail-content">
+                    <div class="detail-label">Hora</div>
+                    <div class="detail-value">{{ object.time|time:"H:i" }}</div>
+                </div>
+            </div>
+            
+            <div class="detail-item">
+                <div class="detail-icon">
+                    <i class="bi bi-people-fill"></i>
+                </div>
+                <div class="detail-content">
+                    <div class="detail-label">Número de Personas</div>
+                    <div class="detail-value">{{ object.guests }}</div>
+                </div>
+            </div>
+            
+            <div class="detail-item">
+                <div class="detail-icon">
+                    <i class="bi bi-phone"></i>
+                </div>
+                <div class="detail-content">
+                    <div class="detail-label">Teléfono</div>
+                    <div class="detail-value">{{ object.customer_phone }}</div>
+                </div>
+            </div>
+            
+            {% if object.customer_email %}
+            <div class="detail-item">
+                <div class="detail-icon">
+                    <i class="bi bi-envelope"></i>
+                </div>
+                <div class="detail-content">
+                    <div class="detail-label">Email</div>
+                    <div class="detail-value">{{ object.customer_email }}</div>
+                </div>
+            </div>
+            {% endif %}
+            
+            <div class="detail-item">
+                <div class="detail-icon">
+                    <i class="bi bi-cup-straw"></i>
+                </div>
+                <div class="detail-content">
+                    <div class="detail-label">Mesa</div>
+                    <div class="detail-value">
+                        Mesa #{{ object.table.pk }} ({{ object.table.number_of_chairs }} personas)
+                        <br>
+                        <small>{{ object.table.location }}</small>
+                    </div>
+                </div>
+            </div>
+            
+            {% if object.notes %}
+            <div class="detail-item">
+                <div class="detail-icon">
+                    <i class="bi bi-card-text"></i>
+                </div>
+                <div class="detail-content">
+                    <div class="detail-label">Notas Adicionales</div>
+                    <div class="detail-value">{{ object.notes }}</div>
+                </div>
+            </div>
+            {% endif %}
+            
+            <div class="action-buttons">
+                <a href="{% url 'reservations:update' object.pk %}" class="btn btn-edit">
+                    <i class="bi bi-pencil-square me-2"></i> Editar Reservación
+                </a>
+                <a href="{% url 'reservations:list' %}" class="btn btn-back">
+                    <i class="bi bi-arrow-left me-2"></i> Volver al Listado
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle con Popper -->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

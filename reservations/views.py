@@ -2,146 +2,127 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
-import json
-from .models import Reservation
-from datetime import date
-from tables.models import Table,TableStatus
 from django.views import generic
-from reservations.models import Reservation
-from reservations.forms import ReservationForm
+from django.db import transaction
+import json
+from datetime import date
+from .models import Reservation, ReservationStatus
+from tables.models import Table, TableStatus
+from .forms import ReservationForm
 
-
-# Create your views here.
-
-class CreateReservationView(
-    generic.CreateView
-):
-    queryset = Reservation.objects.all()
+class ReservationBaseView:
+    model = Reservation
     form_class = ReservationForm
-    template_name = 'reservaciones/create-reservation.html'
     success_url = reverse_lazy('reservations:list')
 
-class ListReservationView(
-    generic.ListView
-):
-    queryset = Reservation.objects.all()
+class CreateReservationView(ReservationBaseView, generic.CreateView):
+    template_name = 'reservations/create.html'
+    
+    def form_valid(self, form):
+        """Guarda la reserva y actualiza el estado de la mesa"""
+        with transaction.atomic():
+            response = super().form_valid(form)
+            self.object.table.status = TableStatus.RESERVED
+            self.object.table.save()
+        return response
+
+class ListReservationView(ReservationBaseView, generic.ListView):
+    template_name = 'reservations/list.html'
     context_object_name = 'reservations'
-    template_name = 'reservaciones/list-reservation.html'
+    paginate_by = 10
     
-    def get_context_data(self, **kwargs):  
-        context = super().get_context_data(**kwargs)
-        context['form'] = ReservationForm()
-        return context
+    def get_queryset(self):
+        return Reservation.objects.filter(date__gte=date.today()).order_by('date', 'time')
+
+class UpdateReservationView(ReservationBaseView, generic.UpdateView):
+    template_name = 'reservations/update.html'
     
-    def post(self, request, *args, **kwargs):
-        form = ReservationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('reservations:list')
-        else:
-            return self.render_to_response(self.get_context_data(form=form))
+    def form_valid(self, form):
+        """Maneja cambios de mesa en actualizaciones"""
+        old_table = self.get_object().table
+        with transaction.atomic():
+            response = super().form_valid(form)
+            # Liberar mesa anterior si cambió
+            if old_table != self.object.table:
+                old_table.status = TableStatus.FREE
+                old_table.save()
+            self.object.table.status = TableStatus.RESERVED
+            self.object.table.save()
+        return response
 
-class UpdateReservationView(
-    generic.UpdateView
-):
-    queryset = Reservation.objects.all()
-    form_class = ReservationForm
-    template_name = 'reservaciones/update-reservations.html'
-    success_url = reverse_lazy('reservations:update')
-
-
-class DeleteReservationView(
-    generic.DeleteView
-):
-    queryset = Reservation.objects.all()
-    success_url = reverse_lazy('reservations:list')
+class DeleteReservationView(ReservationBaseView, generic.DeleteView):
+    template_name = 'reservations/confirm_delete.html'  # Añadido template para confirmación
     
+    def delete(self, request, *args, **kwargs):
+        """Libera la mesa al cancelar reserva"""
+        with transaction.atomic():
+            reservation = self.get_object()
+            reservation.table.status = TableStatus.FREE
+            reservation.table.save()
+            return super().delete(request, *args, **kwargs)
 
-
-class DetailReservationView(
-    generic.DetailView
-):
-    queryset = Reservation.objects.all()
-    template_name = 'reservaciones/detail-reservation.html'
+class DetailReservationView(ReservationBaseView, generic.DetailView):
+    template_name = 'reservations/detail.html'
 
 @csrf_exempt
 def api_create_reservation(request):
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
-            table = Table.objects.get(id=data['tableId'])
-
-            Reservation.objects.create(
-                customer_name=data['customerName'],
-                customer_phone=data['customerPhone'],
-                customer_email=data['customerEmail'],
-                date=data['date'],
-                time=data['time'],
-                guests=data['guests'],
-                notes=data['notes'],
-                table=table,
-                status='confirmed'
-            )
-
-            table.status = 2  # Cambia estado de la mesa
-            table.save()
-
-            return JsonResponse({'success': True})
+            with transaction.atomic():
+                table = Table.objects.get(id=data['tableId'])
+                reservation = Reservation.objects.create(
+                    customer_name=data['customerName'],
+                    customer_phone=data['customerPhone'],
+                    customer_email=data['customerEmail'],
+                    date=data['date'],
+                    time=data['time'],
+                    guests=data['guests'],
+                    notes=data['notes'],
+                    table=table,
+                    status=ReservationStatus.CONFIRMED
+                )
+                table.status = TableStatus.RESERVED
+                table.save()
+                return JsonResponse({
+                    'success': True,
+                    'reservationId': reservation.id
+                })
         except Exception as e:
-            return JsonResponse({'success': False, 'error': str(e)})
-    
-    # 👇 Esta es la solución para métodos que no son POST
+            return JsonResponse({
+                'success': False,
+                'error': str(e)
+            }, status=400)
     return JsonResponse({'error': 'Método no permitido'}, status=405)
 
+def reservaciones_dashboard(request):
+    """Vista consolidada para el panel de reservas"""
+    context = {
+        'tables': Table.objects.all().order_by('number'),
+        'reservations_today': Reservation.objects.filter(date=date.today()).order_by('time'),
+        'upcoming_reservations': Reservation.objects.filter(date__gt=date.today()).order_by('date', 'time')[:5],
+        'reservation_statuses': ReservationStatus.choices,
+        'table_statuses': TableStatus.choices
+    }
+    return render(request, 'reservations/dashboard.html', context)
 
-def reservaciones_page(request):
-    tables = [
-        {
-            'id': t.id,
-            'number': t.id,  # usamos el ID como número visible
-            'capacity': t.number_of_chairs,
-            'location': t.location,
-            'status': (
-                'available' if t.status == TableStatus.FREE else
-                'occupied' if t.status == TableStatus.OCCUPIED else
-                'reserved'
-            )
-        }
-        for t in Table.objects.all()
-    ]
-
-    reservations = list(Reservation.objects.filter(date=date.today()).values(
-        'id', 'table_id', 'customer_name', 'customer_phone',
-        'customer_email', 'date', 'time', 'guests', 'status', 'notes'
-    ))
-
-    return render(request, 'reservaciones/reserva.html', {
-        'tables_data': tables,
-        'reservations_data': reservations
+def api_table_status(request):
+    """Endpoint para estado de mesas (AJAX)"""
+    tables = Table.objects.all().values('id', 'number', 'number_of_chairs', 'location', 'status').order_by('number')
+    reservations = Reservation.objects.filter(date=date.today()).values(
+        'id', 'table_id', 'time', 'customer_name', 'guests', 'status'
+    ).order_by('time')
+    return JsonResponse({
+        'tables': list(tables),
+        'reservations': list(reservations),
+        'current_date': date.today().isoformat()
     })
+
+# Versiones compatibles (pueden eliminarse si no se necesitan)
+def reservaciones_page(request):
+    """Alias para mantener compatibilidad"""
+    return reservaciones_dashboard(request)
 
 def api_estado(request):
-    tables = [
-        {
-            'id': t.id,
-            'number': t.id,  # Si tienes un campo específico de número, puedes usarlo
-            'capacity': t.number_of_chairs,
-            'location': t.location,
-            'status': (
-                'available' if t.status == TableStatus.FREE else
-                'occupied' if t.status == TableStatus.OCCUPIED else
-                'reserved'
-            )
-        }
-        for t in Table.objects.all()
-    ]
-
-    reservations = list(Reservation.objects.filter(date=date.today()).values(
-        'id', 'table_id', 'customer_name', 'customer_phone',
-        'customer_email', 'date', 'time', 'guests', 'status', 'notes'
-    ))
-
-    return JsonResponse({
-        'tables': tables,
-        'reservations': reservations
-    })
+    """Alias para mantener compatibilidad con código existente"""
+    return api_table_status(request)

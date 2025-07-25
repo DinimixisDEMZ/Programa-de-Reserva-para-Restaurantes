@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Usuario</title>
+    <style>
+        :root {
+            --primary: #5cb85c;
+            --primary-hover: #4cae4c;
+            --secondary: #337ab7;
+            --error: #d9534f;
+            --text: #333;
+            --light-gray: #f2f2f2;
+            --border: #ccc;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: var(--light-gray);
+            line-height: 1.6;
+            color: var(--text);
+        }
+
+        .auth-container {
+            display: flex;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 500px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .auth-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: #f8f8f8;
+            color: #777;
+        }
+
+        .auth-tab.active {
+            background-color: #fff;
+            color: var(--text);
+            font-weight: bold;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .auth-content {
+            padding: 30px;
+        }
+
+        .auth-form h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: var(--text);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: white;
+            margin-top: 10px;
+        }
+
+        .btn-secondary:hover {
+            opacity: 0.9;
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .error-field {
+            border-color: var(--error) !important;
+        }
+
+        .success-message {
+            color: var(--primary);
+            text-align: center;
+            margin-top: 15px;
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 576px) {
+            .auth-card {
+                box-shadow: none;
+                border-radius: 0;
+            }
+            
+            .auth-content {
+                padding: 20px;
+            }
+        }
+
+        /* Password strength meter */
+        .password-strength {
+            height: 5px;
+            background-color: #eee;
+            margin-top: 10px;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .strength-meter {
+            height: 100%;
+            width: 0;
+            transition: width 0.3s ease, background-color 0.3s ease;
+        }
+
+        /* Show/hide password */
+        .password-container {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-tabs">
+                <div class="auth-tab" onclick="window.location.href='{% url 'login' %}'">Iniciar Sesión</div>
+                <div class="auth-tab active">Registrarse</div>
+            </div>
+            
+            <div class="auth-content">
+                <div class="auth-form">
+                    <h2>Crear una cuenta</h2>
+                    
+                    <form id="register-form" method="POST" action="{% url 'signup' %}">
+                        {% csrf_token %}
+                        
+                        <div class="form-group">
+                            <label for="id_username">Nombre de usuario</label>
+                            <input type="text" id="id_username" name="username" class="form-control" required>
+                            <div class="error-message" id="username-error"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="id_email">Correo electrónico</label>
+                            <input type="email" id="id_email" name="email" class="form-control" required>
+                            <div class="error-message" id="email-error"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="id_password1">Contraseña</label>
+                            <div class="password-container">
+                                <input type="password" id="id_password1" name="password1" class="form-control" required>
+                                <span class="toggle-password" onclick="togglePassword('id_password1')">👁️</span>
+                            </div>
+                            <div class="password-strength">
+                                <div class="strength-meter" id="password-strength"></div>
+                            </div>
+                            <small>La contraseña debe tener al menos 8 caracteres.</small>
+                            <div class="error-message" id="password1-error"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="id_password2">Confirmar contraseña</label>
+                            <div class="password-container">
+                                <input type="password" id="id_password2" name="password2" class="form-control" required>
+                                <span class="toggle-password" onclick="togglePassword('id_password2')">👁️</span>
+                            </div>
+                            <div class="error-message" id="password2-error"></div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Registrarse</button>
+                        
+                        <div class="success-message" id="success-message"></div>
+                    </form>
+                    
+                    <p style="text-align: center; margin-top: 20px;">
+                        ¿Ya tienes una cuenta? <a href="{% url 'login' %}" style="color: var(--primary);">Inicia sesión</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mostrar/ocultar contraseña
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            input.type = input.type === 'password' ? 'text' : 'password';
+        }
+
+        // Validación de contraseña en tiempo real
+        document.getElementById('id_password1').addEventListener('input', function(e) {
+            const password = e.target.value;
+            const strengthMeter = document.getElementById('password-strength');
+            let strength = 0;
+            
+            // Validar longitud
+            if (password.length >= 8) strength += 1;
+            
+            // Validar caracteres especiales
+            if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) strength += 1;
+            
+            // Validar números
+            if (/\d/.test(password)) strength += 1;
+            
+            // Validar mayúsculas y minúsculas
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength += 1;
+            
+            // Actualizar medidor visual
+            const colors = ['#d9534f', '#f0ad4e', '#5bc0de', '#5cb85c'];
+            const width = (strength / 4) * 100;
+            strengthMeter.style.width = `${width}%`;
+            strengthMeter.style.backgroundColor = colors[strength - 1] || '#d9534f';
+        });
+
+        // Validación del formulario
+        document.getElementById('register-form').addEventListener('submit', function(e) {
+            let isValid = true;
+            
+            // Limpiar errores anteriores
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.style.display = 'none';
+                el.textContent = '';
+            });
+            
+            document.querySelectorAll('.form-control').forEach(el => {
+                el.classList.remove('error-field');
+            });
+            
+            // Validar nombre de usuario
+            const username = document.getElementById('id_username').value.trim();
+            if (username.length < 4) {
+                showError('username-error', 'El nombre de usuario debe tener al menos 4 caracteres');
+                isValid = false;
+            }
+            
+            // Validar email
+            const email = document.getElementById('id_email').value.trim();
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showError('email-error', 'Ingresa un correo electrónico válido');
+                isValid = false;
+            }
+            
+            // Validar contraseñas
+            const password1 = document.getElementById('id_password1').value;
+            const password2 = document.getElementById('id_password2').value;
+            
+            if (password1.length < 8) {
+                showError('password1-error', 'La contraseña debe tener al menos 8 caracteres');
+                isValid = false;
+            }
+            
+            if (password1 !== password2) {
+                showError('password2-error', 'Las contraseñas no coinciden');
+                isValid = false;
+            }
+            
+            if (!isValid) {
+                e.preventDefault();
+            }
+        });
+        
+        function showError(elementId, message) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.style.display = 'block';
+            document.getElementById(elementId.replace('-error', '')).classList.add('error-field');
+        }
+
+        // Mostrar mensajes del servidor Django
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const error = urlParams.get('error');
+            
+            if (error) {
+                document.getElementById('error-message').textContent = error;
+                document.getElementById('error-message').style.display = 'block';
+            }
+        };
+    </script>
+</body>
+</html>

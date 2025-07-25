@@ -3,77 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-
+    <title>Iniciar Sesión | Bella Italia</title>
     <style>
-        body{
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: #f2f2f2;
+        :root {
+            --primary: #5cb85c;
+            --primary-hover: #4cae4c;
+            --error: #d9534f;
+            --text: #333;
+            --light-gray: #f2f2f2;
+            --border: #ccc;
         }
 
-        .login-container{
-            width: 350px;
-            margin: 100px auto;
-            padding: 30px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--light-gray);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
 
-        .login-container h2{
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .login-container label{
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        .login-container input{
+        .login-container {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            max-width: 400px;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
-        .login-container button{
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-header h2 {
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .form-control {
             width: 100%;
             padding: 12px;
-            background-color: #5cb85c;
-            border: none;
-            color: #fff;
+            border: 1px solid var(--border);
+            border-radius: 5px;
             font-size: 16px;
-            border-radius: 4px;
+            transition: border 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(92, 184, 92, 0.2);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
 
-        .login-container button:hover{
-            background-color: #4cae4c;
+        .btn:hover {
+            background-color: var(--primary-hover);
         }
 
-        #error-message{
-            color: red;
+        .auth-footer {
+            margin-top: 2rem;
             text-align: center;
-            margin-top: 10px;
+            border-top: 1px solid var(--border);
+            padding-top: 1.5rem;
+        }
+
+        .auth-footer p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .auth-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #f8f9fa;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .auth-link:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        /* Mensajes de error */
+        .alert {
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: var(--error);
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .login-container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="login-container">
-        <h2>Iniciar Sesión</h2>
-        <form id="login-form" method="POST">
+        <div class="login-header">
+            <h2>Iniciar Sesión</h2>
+            <p>Bienvenido de vuelta a Bella Italia</p>
+        </div>
+
+        {% if form.errors %}
+        <div class="alert alert-error">
+            Usuario o contraseña incorrectos. Por favor intente nuevamente.
+        </div>
+        {% endif %}
+
+        <form method="POST" action="{% url 'login' %}">
             {% csrf_token %}
-            {{form}}
-            <button type="submit">Entrar</button>
+            
+            <div class="form-group">
+                <label for="id_username">Usuario</label>
+                <input type="text" name="username" id="id_username" class="form-control" required autofocus>
+            </div>
+            
+            <div class="form-group">
+                <label for="id_password">Contraseña</label>
+                <input type="password" name="password" id="id_password" class="form-control" required>
+            </div>
+            
+            <button type="submit" class="btn">Entrar</button>
         </form>
-        <p id="error-message">
-            {% if messages %}
-                {{message}}
-            {% endif %}
-        </p>
+
+        <div class="auth-footer">
+            <p>¿No tienes una cuenta?</p>
+            <a href="{% url 'signup' %}" class="auth-link">Regístrate aquí</a>
+        </div>
     </div>
 </body>
 </html>
