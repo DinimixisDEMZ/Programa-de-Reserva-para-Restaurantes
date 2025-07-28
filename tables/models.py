@@ -10,8 +10,8 @@ class TableStatus(models.IntegerChoices):
     RESERVED = 2, 'Reservada'
 
 class Table(models.Model):
-    location = models.CharField(max_length=200, help_text='Ubicacion de la mesa (ex:Terraza)')
-    number_of_chairs = models.IntegerField(default=5, validators=[MinValueValidator(2),MaxValueValidator(12)], help_text='Numero de sillas que tiene la mesa (ex:5)')
+    location = models.CharField(max_length=200, help_text='Ubicación de la mesa (ex:Terraza)')
+    number_of_chairs = models.IntegerField(default=5, validators=[MinValueValidator(2),MaxValueValidator(12)], help_text='Número de sillas que tiene la mesa (ex:5)')
     status = models.IntegerField(choices=TableStatus.choices, default=TableStatus.FREE, help_text='Estado actual de la mesa (ex:Ocupada)')
     
     def __str__(self):
