@@ -58,7 +58,7 @@ class ReservationForm(forms.ModelForm):
         self.fields['guests'].widget.attrs['max'] = 20  # Asumiendo un máximo de 20 personas
         
         # Ordenar las mesas de forma más amigable
-        self.fields['table'].queryset = self.fields['table'].queryset.order_by('number')
+        self.fields['table'].queryset = self.fields['table'].queryset.order_by('number_of_chairs')
     
     def clean_date(self):
         date_val = self.cleaned_data.get('date')

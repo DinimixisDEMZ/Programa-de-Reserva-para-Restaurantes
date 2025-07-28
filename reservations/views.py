@@ -1,4 +1,6 @@
-from django.shortcuts import render, redirect
+# reservations/views.py
+
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
@@ -16,7 +18,7 @@ class ReservationBaseView:
     success_url = reverse_lazy('reservations:list')
 
 class CreateReservationView(ReservationBaseView, generic.CreateView):
-    template_name = 'reservations/create.html'
+    template_name = 'reservations/create-reservation.html'
     
     def form_valid(self, form):
         """Guarda la reserva y actualiza el estado de la mesa"""
@@ -50,9 +52,14 @@ class UpdateReservationView(ReservationBaseView, generic.UpdateView):
             self.object.table.save()
         return response
 
+# Tu vista DeleteReservationView existente
 class DeleteReservationView(ReservationBaseView, generic.DeleteView):
-    template_name = 'reservations/confirm_delete.html'  # Añadido template para confirmación
+    template_name = 'reservations/confirm-delete.html'  # Añadido template para confirmación
     
+    def get_success_url(self):
+        # Redirige a la lista de reservaciones para eliminar después de una eliminación exitosa
+        return reverse_lazy('reservation_list_to_delete') # Usamos reverse_lazy para la URL de la lista de eliminación
+
     def delete(self, request, *args, **kwargs):
         """Libera la mesa al cancelar reserva"""
         with transaction.atomic():
@@ -117,6 +124,17 @@ def api_table_status(request):
         'reservations': list(reservations),
         'current_date': date.today().isoformat()
     })
+
+# Nueva vista para listar las reservaciones que se pueden eliminar
+class ReservationListToDeleteView(generic.ListView):
+    model = Reservation
+    template_name = 'reservations/reservation_list_to_delete.html'
+    context_object_name = 'reservations' # Nombre de la lista de objetos en el contexto
+    
+    def get_queryset(self):
+        # En un escenario real, aquí filtrarías las reservaciones por el usuario actual.
+        # Por ejemplo: return Reservation.objects.filter(customer_email=self.request.user.email).order_by('date', 'time')
+        return Reservation.objects.all().order_by('date', 'time') # Para este ejemplo, listamos todas
 
 # Versiones compatibles (pueden eliminarse si no se necesitan)
 def reservaciones_page(request):
