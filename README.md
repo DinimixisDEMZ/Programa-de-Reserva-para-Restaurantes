@@ -28,13 +28,13 @@ Bienvenido equipo a nuestro repositorio de desarrollo temporal.
 - [x] Organización.
 - [x] Página principal.
 - [x] Añadidos
-- [ ] Lógica de las reservaciones
+- [x] Lógica de las reservaciones
 
 ### **Dan**:
 - [x] Creación del repo.
 - [x] Hacer Offline Fronted
 - [x] Pulir detalles necesarios.
-- [ ] Finalizar Lógistica
+- [x] Finalizar Lógistica
 
 ### **Axe:**
 - [x] Menú con las imagenes de la comida.
