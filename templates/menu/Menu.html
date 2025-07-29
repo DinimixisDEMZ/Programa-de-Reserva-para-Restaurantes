@@ -6,6 +6,379 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menú de Comida Italiana</title>
     <link rel="stylesheet" href="{% static 'css/menu.css' %}">
+    <style>
+        /* Variables de color de tu estilo italiano */
+        :root {
+            --italian-green: #009246;
+            --italian-red: #ce2b37;
+            --italian-gold: #d4af37;
+            --cream: #faf8f5;
+            --warm-white: #ffffff;
+            --charcoal: #2c2c2c;
+            --olive: #6b7c32;
+            --terracotta: #c65d07;
+            --sage: #9caf88;
+        }
+
+        /* Estilos generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--cream) 0%, #f5f2ed 100%);
+            color: var(--charcoal);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .menu-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: var(--warm-white);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--charcoal);
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--italian-green), var(--italian-red));
+            border-radius: 2px;
+        }
+
+        .menu-category {
+            margin-bottom: 3rem;
+        }
+
+        .menu-category h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: var(--olive);
+            border-bottom: 2px solid var(--italian-gold);
+            padding-bottom: 0.8rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            background: var(--cream);
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            border: 1px solid #e0d8cc;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .item-details {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .item-info {
+            flex-grow: 1;
+        }
+
+        .item-info h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--charcoal);
+            margin-bottom: 0.5rem;
+        }
+
+        .item-info p {
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .item-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--italian-red);
+            margin-left: 1.5rem;
+            white-space: nowrap;
+        }
+
+        .item-quantity {
+            width: 70px;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+            text-align: center;
+            margin-left: 1.5rem;
+            background: var(--warm-white);
+            color: var(--charcoal);
+        }
+
+        .menu-item img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-left: 2rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .order-summary {
+            background: linear-gradient(135deg, var(--warm-white), #fdfbf8);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-top: 3rem;
+            border: 2px solid var(--italian-gold);
+            text-align: center;
+        }
+
+        .order-summary h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--charcoal);
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .order-summary h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--italian-gold);
+            border-radius: 1px;
+        }
+
+        #order-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px dashed #ddd;
+            padding-bottom: 1.5rem;
+        }
+
+        #order-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            font-size: 1.1rem;
+            color: #444;
+        }
+
+        .order-total {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--italian-green);
+            margin-bottom: 2rem;
+        }
+
+        .order-button, .clear-order-button, .proceed-button {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            margin: 0.5rem;
+        }
+
+        .order-button {
+            background: linear-gradient(135deg, var(--italian-green), var(--olive));
+            color: white;
+            box-shadow: 0 4px 15px rgba(0,146,70,0.3);
+        }
+
+        .order-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,146,70,0.4);
+        }
+
+        .clear-order-button {
+            background: var(--cream);
+            color: var(--charcoal);
+            border: 2px solid var(--italian-gold);
+        }
+
+        .clear-order-button:hover {
+            background: var(--italian-gold);
+            color: white;
+        }
+
+        .proceed-button {
+            background: linear-gradient(135deg, #4a90e2, #63a4ff); /* Un azul para el botón de proceder */
+            color: white;
+            box-shadow: 0 4px 15px rgba(74,144,226,0.3);
+        }
+
+        .proceed-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(74,144,226,0.4);
+        }
+
+        /* Estilos para el modal personalizado */
+        .modal {
+            display: flex; /* Siempre flex, pero oculto por 'hidden' */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+            backdrop-filter: blur(5px); /* Efecto de desenfoque */
+            -webkit-backdrop-filter: blur(5px); /* Para compatibilidad con Safari */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.hidden {
+            display: none; /* Clase para ocultar el modal */
+        }
+
+        .modal-content {
+            background-color: var(--warm-white);
+            margin: auto;
+            padding: 30px;
+            border: 1px solid var(--italian-gold);
+            width: 90%;
+            max-width: 500px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+            position: relative;
+            animation: fadeInModal 0.3s ease-out;
+            z-index: 1001; /* Asegura que el contenido esté por encima del fondo */
+        }
+
+        @keyframes fadeInModal {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-content h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+
+        .modal-content p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            color: var(--charcoal);
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .modal-buttons button {
+            cursor: pointer; /* Asegura que los botones sean claramente clickeables */
+        }
+
+        .close-button {
+            color: #aaa;
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 32px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: var(--italian-red);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .menu-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .item-price, .item-quantity {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+            .menu-item img {
+                margin-left: 0;
+                margin-top: 1.5rem;
+                width: 100%;
+                height: 180px;
+            }
+            .order-button, .clear-order-button, .proceed-button {
+                width: 100%;
+                margin: 0.5rem 0;
+            }
+            .order-summary {
+                padding: 1.5rem;
+            }
+            .menu-container {
+                padding: 1rem;
+            }
+            h1 {
+                font-size: 2.5rem;
+            }
+            .menu-category h2 {
+                font-size: 1.8rem;
+            }
+            .modal-content {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="menu-container">
@@ -230,12 +603,119 @@
             <div class="order-total" id="order-total">Total: $0.00</div>
             <button class="order-button" onclick="placeOrder()">Realizar Pedido</button>
             <button class="clear-order-button" onclick="clearOrder()">Reiniciar Pedido</button>
+            <button class="proceed-button" onclick="proceedToReservation()">Proceder a Reservar</button>
+        </div>
+    </div>
+
+    <!-- Custom Modal Structure -->
+    <div id="customModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button" id="modalCloseButton">&times;</span>
+            <h3 id="modalTitle"></h3>
+            <p id="modalMessage"></p>
+            <div class="modal-buttons">
+                <button id="modalOkButton" class="order-button">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Confirm Modal Structure -->
+    <div id="customConfirmModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button" id="confirmModalCloseButton">&times;</span>
+            <h3 id="confirmModalTitle"></h3>
+            <p id="confirmModalMessage"></p>
+            <div class="modal-buttons">
+                <button id="confirmModalYesButton" class="order-button">Sí</button>
+                <button id="confirmModalNoButton" class="clear-order-button">No</button>
+            </div>
         </div>
     </div>
 
     <script>
-     
-        let updateOrderSummary; 
+        let updateOrderSummary;
+        let currentOrderItems = []; // Variable global para almacenar los ítems del pedido
+
+        // Funciones para modales personalizados
+        function showCustomModal(title, message, onOkCallback) {
+            const modal = document.getElementById('customModal');
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalMessage').textContent = message;
+            modal.classList.remove('hidden'); // Mostrar modal
+
+            const closeButton = document.getElementById('modalCloseButton');
+            const okButton = document.getElementById('modalOkButton');
+
+            const closeModal = () => {
+                modal.classList.add('hidden'); // Ocultar modal
+                okButton.removeEventListener('click', okHandler);
+                closeButton.removeEventListener('click', closeHandler);
+                modal.removeEventListener('click', outsideClickHandler);
+            };
+
+            const okHandler = () => {
+                closeModal();
+                if (onOkCallback) onOkCallback();
+            };
+
+            const closeHandler = () => {
+                closeModal();
+            };
+
+            const outsideClickHandler = (event) => {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            };
+
+            okButton.addEventListener('click', okHandler);
+            closeButton.addEventListener('click', closeHandler);
+            modal.addEventListener('click', outsideClickHandler); // Click fuera del modal
+        }
+
+        function showConfirmModal(title, message, onYesCallback, onNoCallback) {
+            const modal = document.getElementById('customConfirmModal');
+            document.getElementById('confirmModalTitle').textContent = title;
+            document.getElementById('confirmModalMessage').textContent = message;
+            modal.classList.remove('hidden'); // Mostrar modal
+
+            const closeButton = document.getElementById('confirmModalCloseButton');
+            const yesButton = document.getElementById('confirmModalYesButton');
+            const noButton = document.getElementById('confirmModalNoButton');
+
+            const closeModal = () => {
+                modal.classList.add('hidden'); // Ocultar modal
+                yesButton.removeEventListener('click', yesHandler);
+                noButton.removeEventListener('click', noHandler);
+                closeButton.removeEventListener('click', closeHandler);
+                modal.removeEventListener('click', outsideClickHandler);
+            };
+
+            const yesHandler = () => {
+                closeModal();
+                if (onYesCallback) onYesCallback();
+            };
+
+            const noHandler = () => {
+                closeModal();
+                if (onNoCallback) onNoCallback();
+            };
+
+            const closeHandler = () => {
+                closeModal();
+            };
+
+            const outsideClickHandler = (event) => {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            };
+
+            yesButton.addEventListener('click', yesHandler);
+            noButton.addEventListener('click', noHandler);
+            closeButton.addEventListener('click', closeHandler);
+            modal.addEventListener('click', outsideClickHandler);
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
             const quantityInputs = document.querySelectorAll('.item-quantity');
@@ -244,7 +724,7 @@
 
             updateOrderSummary = () => { // Assign to the global variable
                 let total = 0;
-                let itemsOrdered = [];
+                currentOrderItems = []; // Reiniciar la lista de ítems del pedido
 
                 quantityInputs.forEach(input => {
                     const quantity = parseInt(input.value);
@@ -253,7 +733,7 @@
                         const itemPrice = parseFloat(input.dataset.itemPrice);
                         const itemTotalPrice = quantity * itemPrice;
                         total += itemTotalPrice;
-                        itemsOrdered.push({
+                        currentOrderItems.push({ // Llenar la variable global
                             name: itemName,
                             quantity: quantity,
                             price: itemPrice,
@@ -264,10 +744,10 @@
 
                 orderList.innerHTML = ''; // Limpiar lista actual
 
-                if (itemsOrdered.length === 0) {
+                if (currentOrderItems.length === 0) {
                     orderList.innerHTML = '<li>No hay ítems seleccionados.</li>';
                 } else {
-                    itemsOrdered.forEach(item => {
+                    currentOrderItems.forEach(item => {
                         const listItem = document.createElement('li');
                         listItem.innerHTML = `
                             <span>${item.name} x${item.quantity}</span>
@@ -289,36 +769,50 @@
         });
 
         function placeOrder() {
-            const orderListItems = document.querySelectorAll('#order-list li');
-            const total = document.getElementById('order-total').textContent;
-
-            if (orderListItems.length === 1 && orderListItems[0].textContent === 'No hay ítems seleccionados.') {
-                alert('Por favor, selecciona al menos un ítem para realizar tu pedido.');
+            if (currentOrderItems.length === 0) {
+                showCustomModal('Pedido Vacío', 'Por favor, selecciona al menos un ítem para realizar tu pedido.');
                 return;
             }
 
-            let orderDetails = "Tu pedido:\n";
-            orderListItems.forEach(item => {
-                if (item.textContent !== 'No hay ítems seleccionados.') {
-                    orderDetails += `- ${item.textContent}\n`;
-                }
+            let orderDetailsText = "Tu pedido:\n";
+            currentOrderItems.forEach(item => {
+                orderDetailsText += `- ${item.name} x${item.quantity} ($${item.totalPrice.toFixed(2)})\n`;
             });
-            orderDetails += `\n${total}`;
-            alert(orderDetails + "\n\n¡Gracias por tu pedido!");
+            orderDetailsText += `\n${document.getElementById('order-total').textContent}`;
+            
+            showCustomModal('Pedido Realizado', orderDetailsText + "\n\n¡Gracias por tu pedido!");
         }
 
         function clearOrder() {
-            const quantityInputs = document.querySelectorAll('.item-quantity');
-            quantityInputs.forEach(input => {
-                input.value = 0;
-            });
-            // Call the globally accessible updateOrderSummary function
-            if (typeof updateOrderSummary === 'function') {
-                updateOrderSummary();
-            } else {
-                console.error("updateOrderSummary is not defined or not a function.");
+            showConfirmModal(
+                'Reiniciar Pedido',
+                '¿Estás seguro de que deseas reiniciar tu pedido?',
+                () => { // Callback para 'Sí'
+                    const quantityInputs = document.querySelectorAll('.item-quantity');
+                    quantityInputs.forEach(input => {
+                        input.value = 0;
+                    });
+                    updateOrderSummary();
+                    showCustomModal('Pedido Reiniciado', 'El pedido ha sido reiniciado.');
+                },
+                () => { // Callback para 'No'
+                    // No hacer nada si el usuario cancela
+                }
+            );
+        }
+
+        function proceedToReservation() {
+            if (currentOrderItems.length === 0) {
+                showCustomModal('Pedido Vacío', 'Por favor, selecciona ítems del menú antes de proceder a la reservación.');
+                return;
             }
-            alert('El pedido ha sido reiniciado.');
+
+            // Guardar el pedido en localStorage
+            localStorage.setItem('currentOrder', JSON.stringify(currentOrderItems));
+            localStorage.setItem('currentOrderTotal', document.getElementById('order-total').textContent);
+
+            // Redirigir a la página de creación de reservaciones
+            window.location.href = "{% url 'reservations:create_reservation' %}";
         }
     </script>
 </body>
