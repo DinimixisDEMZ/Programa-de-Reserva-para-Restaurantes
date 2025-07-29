@@ -15,7 +15,7 @@ from .forms import ReservationForm
 class ReservationBaseView:
     model = Reservation
     form_class = ReservationForm
-    success_url = reverse_lazy('reservations:list')
+    success_url = reverse_lazy('reservations:list_reservations') # CORREGIDO: Apunta a la URL renombrada
 
 class CreateReservationView(ReservationBaseView, generic.CreateView):
     template_name = 'reservations/create-reservation.html'
@@ -37,7 +37,7 @@ class ListReservationView(ReservationBaseView, generic.ListView):
         return Reservation.objects.filter(date__gte=date.today()).order_by('date', 'time')
 
 class UpdateReservationView(ReservationBaseView, generic.UpdateView):
-    template_name = 'reservations/update.html'
+    template_name = 'reservations/update-reservations.html'
     
     def form_valid(self, form):
         """Maneja cambios de mesa en actualizaciones"""
@@ -58,7 +58,7 @@ class DeleteReservationView(ReservationBaseView, generic.DeleteView):
     
     def get_success_url(self):
         # Redirige a la lista de reservaciones para eliminar después de una eliminación exitosa
-        return reverse_lazy('reservation_list_to_delete') # Usamos reverse_lazy para la URL de la lista de eliminación
+        return reverse_lazy('reservations:list_to_delete') # Usamos reverse_lazy para la URL de la lista de eliminación
 
     def delete(self, request, *args, **kwargs):
         """Libera la mesa al cancelar reserva"""
@@ -132,9 +132,8 @@ class ReservationListToDeleteView(generic.ListView):
     context_object_name = 'reservations' # Nombre de la lista de objetos en el contexto
     
     def get_queryset(self):
-        # En un escenario real, aquí filtrarías las reservaciones por el usuario actual.
-        # Por ejemplo: return Reservation.objects.filter(customer_email=self.request.user.email).order_by('date', 'time')
-        return Reservation.objects.all().order_by('date', 'time') # Para este ejemplo, listamos todas
+        # Asegúrate de que el order_by solo use campos que existen en tu modelo Reservation
+        return Reservation.objects.all().order_by('date', 'time')
 
 # Versiones compatibles (pueden eliminarse si no se necesitan)
 def reservaciones_page(request):

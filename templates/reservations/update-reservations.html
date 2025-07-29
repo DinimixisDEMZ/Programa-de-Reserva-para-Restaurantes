@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Reservación #{{object.pk}} | Restaurante Elegante</title>
-    <!-- Bootstrap CSS -->
+    <title>Editar Reservación</title>
+    <!-- Bootstrap CSS CDN -->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-    <!-- Bootstrap Icons -->
+    <!-- Bootstrap Icons CDN -->
     <link rel="stylesheet" href="{% static 'font/bootstrap-icons.min.css' %}">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Inter Font -->
+    <link rel="stylesheet" href="{% static 'font/css2.css' %}">
     <style>
         :root {
             --primary-color: #5e3a1f;
@@ -22,302 +22,154 @@
         }
         
         body {
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Inter', sans-serif;
             background-color: var(--light-bg);
-            color: var(--dark-text);
-            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 2rem;
         }
-        
-        h1, h2, h3, h4, h5, h6 {
+        .section-title {
+            position: relative;
             font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
             font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 2.5rem;
+            text-align: center;
         }
-        
-        .edit-card {
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--secondary-color);
+            margin: 15px auto;
+        }
+        .form-container {
             background: white;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            overflow: hidden;
-            max-width: 800px;
-            margin: 0 auto;
+            padding: 3rem;
+            width: 100%;
+            max-width: 600px;
         }
-        
-        .edit-header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 2rem;
-            text-align: center;
-        }
-        
-        .edit-title {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .edit-body {
-            padding: 2rem;
-        }
-        
         .form-group {
             margin-bottom: 1.5rem;
         }
-        
         .form-label {
             display: block;
             font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--primary-color);
+            margin-bottom: 0.8rem;
+            color: var(--dark-text);
         }
-        
         .form-control {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 1px solid #ddd;
             border-radius: 8px;
-            font-size: 1rem;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            width: 100%;
             transition: all 0.3s ease;
         }
-        
         .form-control:focus {
             border-color: var(--secondary-color);
             box-shadow: 0 0 0 0.25rem rgba(200, 169, 126, 0.25);
-            outline: none;
         }
-        
-        .action-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(200, 169, 126, 0.2);
-        }
-        
-        .btn-save {
-            background-color: var(--secondary-color);
-            color: white;
-            border: none;
-            padding: 0.75rem 2rem;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-save:hover {
+        .btn-primary-custom {
             background-color: var(--primary-color);
-            transform: translateY(-2px);
-        }
-        
-        .btn-cancel {
-            background-color: var(--light-bg);
-            color: var(--dark-text);
-            border: 1px solid var(--secondary-color);
-            padding: 0.75rem 2rem;
+            border: none;
             border-radius: 50px;
+            padding: 12px 30px;
             font-weight: 600;
+            letter-spacing: 0.5px;
+            color: var(--light-text);
             transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
-        
-        .btn-cancel:hover {
+        .btn-primary-custom:hover {
             background-color: var(--secondary-color);
-            color: white;
+            transform: translateY(-2px);
+            color: var(--dark-text);
         }
-        
-        /* Estilos para campos específicos */
-        #id_date {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%235e3a1f' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 15px center;
-            background-size: 20px;
+        .btn-primary-custom i {
+            margin-right: 0.5rem;
         }
-        
-        #id_time {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%235e3a1f' viewBox='0 0 16 16'%3E%3Cpath d='M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z'/%3E%3Cpath d='M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 15px center;
-            background-size: 20px;
+        .btn-secondary-custom {
+            background-color: var(--accent-color);
+            border: none;
+            border-radius: 50px;
+            padding: 12px 30px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: var(--dark-text);
+            transition: all 0.3s ease;
+            margin-left: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
-        
+        .btn-secondary-custom:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            color: var(--light-text);
+        }
         @media (max-width: 768px) {
             body {
                 padding: 1rem;
+                align-items: flex-start;
             }
-            
-            .edit-title {
-                font-size: 1.5rem;
+            .section-title {
+                font-size: 2rem;
             }
-            
-            .edit-header, .edit-body {
-                padding: 1.5rem;
+            .form-container {
+                padding: 2rem;
             }
-            
-            .action-buttons {
+            .btn-group-responsive {
                 flex-direction: column;
-                gap: 0.5rem;
+                align-items: center;
             }
-            
-            .btn-save, .btn-cancel {
+            .btn-group-responsive .btn {
+                margin-left: 0 !important;
+                margin-bottom: 1rem;
                 width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <div class="edit-card">
-        <div class="edit-header">
-            <h1 class="edit-title">Editar Reservación</h1>
-            <p>#{{ object.pk }} - {{ object.customer_name }}</p>
-        </div>
-        
-        <div class="edit-body">
-            <form method="POST">
+    <main class="container">
+        <section class="form-container">
+            <h2 class="section-title">Editar Reservación</h2>
+            <form method="POST" class="mx-auto" style="max-width: 600px;">
                 {% csrf_token %}
                 
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="id_customer_name" class="form-label">Nombre Completo</label>
-                            <input type="text" name="customer_name" class="form-control" id="id_customer_name" 
-                                   value="{{ form.customer_name.value }}" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="id_customer_phone" class="form-label">Teléfono</label>
-                            <input type="tel" name="customer_phone" class="form-control" id="id_customer_phone" 
-                                   value="{{ form.customer_phone.value }}" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="id_customer_email" class="form-label">Email</label>
-                            <input type="email" name="customer_email" class="form-control" id="id_customer_email" 
-                                   value="{{ form.customer_email.value|default_if_none:'' }}">
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="id_date" class="form-label">Fecha</label>
-                            <input type="date" name="date" class="form-control" id="id_date" 
-                                   value="{{ form.date.value|date:'Y-m-d' }}" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="id_time" class="form-label">Hora</label>
-                            <input type="time" name="time" class="form-control" id="id_time" 
-                                   value="{{ form.time.value|time:'H:i' }}" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="id_guests" class="form-label">Número de Personas</label>
-                            <select name="guests" class="form-control" id="id_guests" required>
-                                {% for i in "123456789"|make_list %}
-                                <option value="{{ forloop.counter }}" {% if form.guests.value == forloop.counter %}selected{% endif %}>
-                                    {{ forloop.counter }} persona{{ forloop.counter|pluralize }}
-                                </option>
-                                {% endfor %}
-                                <option value="10" {% if form.guests.value == 10 %}selected{% endif %}>10+ personas</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="id_table" class="form-label">Mesa</label>
-                    <select name="table" class="form-control" id="id_table" required>
-                        {% for table in available_tables %}
-                        <option value="{{ table.id }}" {% if form.table.value == table.id %}selected{% endif %}>
-                            Mesa {{ table.id }} ({{ table.number_of_chairs }} personas) - {{ table.location }}
-                        </option>
+                {% for field in form %}
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.help_text %}
+                            <small class="form-text text-muted">{{ field.help_text }}</small>
+                        {% endif %}
+                        {% for error in field.errors %}
+                            <div class="text-danger">{{ error }}</div>
                         {% endfor %}
-                    </select>
-                </div>
+                    </div>
+                {% endfor %}
                 
-                <div class="form-group">
-                    <label for="id_notes" class="form-label">Notas Adicionales</label>
-                    <textarea name="notes" class="form-control" id="id_notes" rows="3">{{ form.notes.value|default_if_none:'' }}</textarea>
-                </div>
-                
-                <div class="action-buttons">
-                    <button type="submit" class="btn btn-save">
-                        <i class="bi bi-save me-2"></i> Guardar Cambios
+                <div class="text-center mt-4 btn-group-responsive">
+                    <button type="submit" class="btn btn-primary-custom px-5">
+                        <i class="bi bi-pencil-square me-2"></i> Guardar Cambios
                     </button>
-                    <a href="{% url 'reservations:detail' object.pk %}" class="btn btn-cancel">
-                        <i class="bi bi-x-circle me-2"></i> Cancelar
+                    <a href="{% url 'reservations:list_reservations' %}" class="btn btn-secondary-custom px-5">
+                        <i class="bi bi-arrow-left-circle me-2"></i> Volver a Reservaciones
                     </a>
                 </div>
             </form>
-        </div>
-    </div>
-
+        </section>
+    </main>
     <!-- Bootstrap Bundle con Popper -->
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Validación de fecha no pasada
-            const dateField = document.getElementById('id_date');
-            if (dateField) {
-                const today = new Date().toISOString().split('T')[0];
-                dateField.min = today;
-                
-                dateField.addEventListener('change', function() {
-                    const selectedDate = new Date(this.value);
-                    const today = new Date();
-                    today.setHours(0, 0, 0, 0);
-                    
-                    if (selectedDate < today) {
-                        alert('No se puede seleccionar una fecha pasada');
-                        this.value = today;
-                    }
-                });
-            }
-            
-            // Validación de horario (8:00-23:00)
-            const timeField = document.getElementById('id_time');
-            if (timeField) {
-                timeField.addEventListener('change', function() {
-                    const time = this.value;
-                    if (time) {
-                        const [hours, minutes] = time.split(':').map(Number);
-                        if (hours < 8 || hours >= 23) {
-                            alert('El horario debe ser entre 8:00 AM y 11:00 PM');
-                            this.value = '';
-                        }
-                    }
-                });
-            }
-            
-            // Actualizar mesas disponibles según número de personas
-            const guestsSelect = document.getElementById('id_guests');
-            const tableSelect = document.getElementById('id_table');
-            
-            if (guestsSelect && tableSelect) {
-                guestsSelect.addEventListener('change', function() {
-                    const guests = parseInt(this.value);
-                    Array.from(tableSelect.options).forEach(option => {
-                        if (option.value) {
-                            const matches = option.text.match(/\((\d+) personas\)/);
-                            const capacity = matches ? parseInt(matches[1]) : 0;
-                            option.style.display = capacity >= guests ? '' : 'none';
-                        }
-                    });
-                    
-                    // Si la mesa seleccionada no es compatible, seleccionar la primera disponible
-                    if (tableSelect.options[tableSelect.selectedIndex].style.display === 'none') {
-                        for (let i = 0; i < tableSelect.options.length; i++) {
-                            if (tableSelect.options[i].style.display !== 'none' && tableSelect.options[i].value) {
-                                tableSelect.selectedIndex = i;
-                                break;
-                            }
-                        }
-                    }
-                });
-                
-                // Ejecutar al cargar para asegurar compatibilidad inicial
-                guestsSelect.dispatchEvent(new Event('change'));
-            }
-        });
-    </script>
 </body>
 </html>

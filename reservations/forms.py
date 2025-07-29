@@ -1,5 +1,5 @@
 from django import forms
-from .models import Reservation
+from .models import Reservation, ReservationStatus # Importa ReservationStatus aquí
 from django.forms import DateInput, TimeInput
 from datetime import date, time
 from django.core.exceptions import ValidationError
@@ -87,7 +87,7 @@ class ReservationForm(forms.ModelForm):
                 date=date_val,
                 time=time_val,
                 table=table_val,
-                status=Reservation.ReservationStatus.CONFIRMED
+                status=ReservationStatus.CONFIRMED # Corregido: Referencia directa a ReservationStatus
             )
             
             # Excluir la instancia actual si estamos editando
