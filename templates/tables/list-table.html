@@ -1,17 +1,236 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todas las mesas</title>
+    <title>Todas las Mesas</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Bootstrap Icons CDN -->
+    <link rel="stylesheet" href="{% static 'font/bootstrap-icons.min.css' %}">
+    <!-- Inter Font -->
+    <link rel="stylesheet" href="{% static 'font/css2.css' %}">
+    <style>
+        :root {
+            --primary-color: #5e3a1f;
+            --secondary-color: #c8a97e;
+            --accent-color: #e8c284;
+            --light-bg: #f9f5f0;
+            --dark-text: #2a2118;
+            --light-text: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light-bg);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+        
+        .section-title {
+            position: relative;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--secondary-color);
+            margin: 15px auto;
+        }
+        
+        .form-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 3rem;
+            width: 100%;
+            max-width: 900px;
+            text-align: center;
+        }
+        
+        .table-responsive {
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .table {
+            width: 100%;
+            margin-bottom: 1rem;
+            color: var(--dark-text);
+            border-collapse: collapse;
+        }
+
+        .table th,
+        .table td {
+            padding: 0.75rem;
+            vertical-align: top;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .table thead th {
+            vertical-align: bottom;
+            border-bottom: 2px solid #dee2e6;
+            background-color: var(--secondary-color);
+            color: var(--light-text);
+        }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .table-hover tbody tr:hover {
+            color: var(--dark-text);
+            background-color: rgba(0, 0, 0, 0.075);
+        }
+
+        .btn-primary-custom {
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 50px;
+            padding: 12px 30px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: var(--light-text);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary-custom:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            color: var(--dark-text);
+        }
+
+        .btn-info-custom {
+            background-color: #17a2b8; /* Info color */
+            border: none;
+            border-radius: 50px;
+            padding: 8px 15px;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+            margin-right: 0.5rem;
+        }
+        .btn-info-custom:hover {
+            background-color: #138496;
+            transform: translateY(-1px);
+        }
+
+        .btn-warning-custom {
+            background-color: #ffc107; /* Warning color */
+            border: none;
+            border-radius: 50px;
+            padding: 8px 15px;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+            margin-right: 0.5rem;
+        }
+        .btn-warning-custom:hover {
+            background-color: #e0a800;
+            transform: translateY(-1px);
+        }
+
+        .btn-danger-custom {
+            background-color: #dc3545; /* Danger color */
+            border: none;
+            border-radius: 50px;
+            padding: 8px 15px;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+        }
+        .btn-danger-custom:hover {
+            background-color: #c82333;
+            transform: translateY(-1px);
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+                align-items: flex-start;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .form-container {
+                padding: 2rem;
+                max-width: 100%;
+            }
+            .table th, .table td {
+                padding: 0.5rem;
+                font-size: 0.85rem;
+            }
+            .btn-group-sm .btn {
+                padding: 6px 10px;
+                font-size: 0.75rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <ol>
-        {% for table in tables %}
-            <li><a href="{% url 'tables:delete' table.pk %}">{{table}}</a></li>
-        {% endfor %}
-    </ol>
+    <main class="container">
+        <section class="form-container">
+            <h2 class="section-title">Todas las Mesas</h2>
+            
+            {% if tables %}
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID Mesa</th>
+                                <th>Sillas</th>
+                                <th>Ubicación</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for table in tables %}
+                            <tr>
+                                <td>{{ table.pk }}</td>
+                                <td>{{ table.number_of_chairs }}</td>
+                                <td>{{ table.location }}</td>
+                                <td>{{ table.get_status_display }}</td> {# Usa get_status_display para el valor legible #}
+                                <td>
+                                    <a href="{% url 'tables:detail_table' pk=table.pk %}" class="btn btn-info-custom btn-sm">
+                                        <i class="bi bi-eye me-1"></i> Ver
+                                    </a>
+                                    <a href="{% url 'tables:update_table' pk=table.pk %}" class="btn btn-warning-custom btn-sm">
+                                        <i class="bi bi-pencil me-1"></i> Editar
+                                    </a>
+                                    <a href="{% url 'tables:confirm_delete_table' pk=table.pk %}" class="btn btn-danger-custom btn-sm">
+                                        <i class="bi bi-trash me-1"></i> Eliminar
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p class="text-muted">No hay mesas registradas.</p>
+            {% endif %}
 
-    
+            <div class="text-center mt-4">
+                <a href="{% url 'tables:create_table' %}" class="btn btn-primary-custom px-5">
+                    <i class="bi bi-plus-circle me-2"></i> Crear Nueva Mesa
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Bootstrap Bundle con Popper -->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>

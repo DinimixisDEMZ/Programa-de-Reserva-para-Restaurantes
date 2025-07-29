@@ -1,17 +1,185 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear una mesa</title>
+    <title>Crear una Mesa</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Bootstrap Icons CDN -->
+    <link rel="stylesheet" href="{% static 'font/bootstrap-icons.min.css' %}">
+    <!-- Inter Font -->
+    <link rel="stylesheet" href="{% static 'font/css2.css' %}">
+    <style>
+        :root {
+            --primary-color: #5e3a1f;
+            --secondary-color: #c8a97e;
+            --accent-color: #e8c284;
+            --light-bg: #f9f5f0;
+            --dark-text: #2a2118;
+            --light-text: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light-bg);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+        
+        .section-title {
+            position: relative;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--secondary-color);
+            margin: 15px auto;
+        }
+        
+        .form-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 3rem;
+            width: 100%;
+            max-width: 600px; /* Ajustado para formularios más pequeños */
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: var(--dark-text);
+        }
+        
+        .form-control {
+            border-radius: 8px;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 0.25rem rgba(200, 169, 126, 0.25);
+        }
+        
+        .btn-primary-custom {
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 50px;
+            padding: 12px 30px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: var(--light-text);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary-custom:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            color: var(--dark-text);
+        }
+
+        /* Nuevo estilo para el botón secundario */
+        .btn-secondary-custom {
+            background-color: var(--accent-color); /* Un color que combine con tu paleta */
+            border: none;
+            border-radius: 50px;
+            padding: 12px 30px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: var(--dark-text); /* Texto oscuro para contraste */
+            transition: all 0.3s ease;
+            margin-left: 1rem; /* Espacio entre botones */
+        }
+
+        .btn-secondary-custom:hover {
+            background-color: var(--secondary-color); /* Cambia al color secundario al pasar el ratón */
+            transform: translateY(-2px);
+            color: var(--light-text);
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+                align-items: flex-start;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .form-container {
+                padding: 2rem;
+            }
+            .btn-group-responsive {
+                flex-direction: column; /* Apila los botones en pantallas pequeñas */
+                align-items: center;
+            }
+            .btn-group-responsive .btn {
+                margin-left: 0 !important; /* Elimina margen horizontal */
+                margin-bottom: 1rem; /* Añade margen vertical */
+                width: 100%; /* Ocupa todo el ancho */
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Creacion de mesas</h1>
-    <form method="POST">
-        {% csrf_token %}
-        {{form}}
-        <button>Crear mesa</button>
-    </form>
-    
+    <main class="container">
+        <section class="form-container">
+            <h2 class="section-title">Crear Nueva Mesa</h2>
+            <form method="POST" class="mx-auto">
+                {% csrf_token %}
+                
+                {# Renderiza los campos del formulario de Django con clases de Bootstrap #}
+                {% for field in form %}
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.help_text %}
+                            <small class="form-text text-muted">{{ field.help_text }}</small>
+                        {% endif %}
+                        {% for error in field.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+                
+                <div class="text-center mt-4 btn-group-responsive">
+                    <button type="submit" class="btn btn-primary-custom px-5">
+                        <i class="bi bi-plus-circle me-2"></i> Crear Mesa
+                    </button>
+                    {# Botón para ir a la lista de mesas #}
+                    <a href="{% url 'tables:list_tables' %}" class="btn btn-secondary-custom px-5">
+                        <i class="bi bi-list-ul me-2"></i> Ver Mesas
+                    </a>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <!-- Bootstrap Bundle con Popper -->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>
+

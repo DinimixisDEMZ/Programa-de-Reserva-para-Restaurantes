@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from tables.models import Table
-from tables.forms import TableForm
+from tables.models import Table # Asegúrate de que Table y TableStatus estén definidos en tables/models.py
+from tables.forms import TableForm # Asumiendo que tienes un forms.py para TableForm
 from django.views import generic
-# Create your views here.
+from django.db import transaction # Importar transaction
 
+# Create your views here.
 
 class CreateTableView(
     generic.CreateView
@@ -12,7 +13,7 @@ class CreateTableView(
     queryset = Table.objects.all()
     form_class = TableForm
     template_name = 'tables/create-table.html'
-    success_url = reverse_lazy('tables:create')
+    success_url = reverse_lazy('tables:list_tables') # Apunta a la lista de tablas
 
 class UpdateTableView(
     generic.UpdateView
@@ -20,15 +21,24 @@ class UpdateTableView(
     queryset = Table.objects.all()
     form_class = TableForm
     template_name = 'tables/update-table.html'
-    success_url = reverse_lazy('tables:update')
+    success_url = reverse_lazy('tables:list_tables') # Apunta a la lista de tablas
     
 
 class DeleteTableView(
     generic.DeleteView
 ):
     queryset = Table.objects.all()
-    success_url = reverse_lazy('tables:list')
+    template_name = 'tables/table_confirm_delete.html' # Usa la plantilla de confirmación
+    success_url = reverse_lazy('tables:list_tables') # Redirige a la lista de tablas después de eliminar
     
+    # Puedes añadir lógica adicional aquí si es necesario antes de la eliminación.
+    # Por ejemplo, si necesitas cambiar el estado de alguna reservación asociada, etc.
+    # def delete(self, request, *args, **kwargs):
+    #     with transaction.atomic():
+    #         table = self.get_object()
+    #         # Lógica adicional aquí, si es necesario
+    #         return super().delete(request, *args, **kwargs)
+
 
 class DetailTableView(
     generic.DetailView
