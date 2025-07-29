@@ -1,163 +1,161 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Usuario</title>
+    <title>Registro de Usuario | Restaurante Elegante</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Bootstrap Icons CDN -->
+    <link rel="stylesheet" href="{% static 'font/bootstrap-icons.min.css' %}">
+    <!-- Inter Font -->
+    <link rel="stylesheet" href="{% static 'font/css2.css' %}">
     <style>
         :root {
-            --primary: #5cb85c;
-            --primary-hover: #4cae4c;
-            --secondary: #337ab7;
-            --error: #d9534f;
-            --text: #333;
-            --light-gray: #f2f2f2;
-            --border: #ccc;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+            --primary-color: #5e3a1f;
+            --secondary-color: #c8a97e;
+            --accent-color: #e8c284;
+            --light-bg: #f9f5f0;
+            --dark-text: #2a2118;
+            --light-text: #f8f9fa;
+            --error-color: #dc3545; /* Rojo para errores */
         }
 
         body {
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: var(--light-gray);
-            line-height: 1.6;
-            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light-bg);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
         }
 
         .auth-container {
-            display: flex;
-            min-height: 100vh;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .auth-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 3rem;
             width: 100%;
-            max-width: 500px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-
-        .auth-tabs {
-            display: flex;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .auth-tab {
-            flex: 1;
+            max-width: 550px; /* Un poco más ancho para el formulario de registro */
             text-align: center;
-            padding: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background-color: #f8f8f8;
-            color: #777;
         }
 
-        .auth-tab.active {
-            background-color: #fff;
-            color: var(--text);
-            font-weight: bold;
-            border-bottom: 2px solid var(--primary);
-        }
-
-        .auth-content {
-            padding: 30px;
-        }
-
-        .auth-form h2 {
+        .section-title {
+            position: relative;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 2.5rem;
             text-align: center;
-            margin-bottom: 25px;
-            color: var(--text);
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--secondary-color);
+            margin: 15px auto;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 1.5rem;
+            text-align: left; /* Alinea etiquetas a la izquierda */
         }
-
-        .form-group label {
+        
+        .form-label {
             display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: var(--dark-text);
         }
-
+        
         .form-control {
-            width: 100%;
+            border-radius: 8px;
             padding: 12px 15px;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            font-size: 16px;
-            transition: border 0.3s ease;
-        }
-
-        .form-control:focus {
-            border-color: var(--primary);
-            outline: none;
-        }
-
-        .btn {
+            border: 1px solid #ddd;
             width: 100%;
-            padding: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 0.25rem rgba(200, 169, 126, 0.25);
+        }
+        
+        .btn-primary-custom {
+            background-color: var(--primary-color);
             border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+            border-radius: 50px;
+            padding: 12px 30px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: var(--light-text);
+            transition: all 0.3s ease;
+            width: 100%; /* Ocupa todo el ancho */
+            margin-top: 1rem; /* Espacio superior */
+        }
+        
+        .btn-primary-custom:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            color: var(--dark-text);
         }
 
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
+        .auth-footer {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
         }
 
-        .btn-primary:hover {
-            background-color: var(--primary-hover);
+        .auth-footer p {
+            color: #666;
+            margin-bottom: 1rem;
         }
 
-        .btn-secondary {
-            background-color: var(--secondary);
-            color: white;
-            margin-top: 10px;
+        .auth-link-custom {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--accent-color);
+            color: var(--dark-text);
+            border: 1px solid var(--secondary-color);
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
         }
 
-        .btn-secondary:hover {
-            opacity: 0.9;
+        .auth-link-custom:hover {
+            background-color: var(--secondary-color);
+            color: var(--light-text);
+            transform: translateY(-2px);
+        }
+
+        /* Mensajes de error */
+        .alert-error {
+            background-color: #f8d7da;
+            color: var(--error-color);
+            border: 1px solid #f5c6cb;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            text-align: center;
         }
 
         .error-message {
-            color: var(--error);
-            font-size: 14px;
-            margin-top: 5px;
-            display: none;
+            color: var(--error-color);
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: none; /* Oculto por defecto */
+            text-align: left;
         }
 
         .error-field {
-            border-color: var(--error) !important;
-        }
-
-        .success-message {
-            color: var(--primary);
-            text-align: center;
-            margin-top: 15px;
-            display: none;
-        }
-
-        /* Responsive */
-        @media (max-width: 576px) {
-            .auth-card {
-                box-shadow: none;
-                border-radius: 0;
-            }
-            
-            .auth-content {
-                padding: 20px;
-            }
+            border-color: var(--error-color) !important;
         }
 
         /* Password strength meter */
@@ -182,109 +180,179 @@
 
         .toggle-password {
             position: absolute;
-            right: 10px;
+            right: 15px;
             top: 50%;
             transform: translateY(-50%);
             cursor: pointer;
             color: #777;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+                align-items: flex-start;
+            }
+            .auth-container {
+                padding: 2rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="auth-container">
-        <div class="auth-card">
-            <div class="auth-tabs">
-                <div class="auth-tab" onclick="window.location.href='{% url 'login' %}'">Iniciar Sesión</div>
-                <div class="auth-tab active">Registrarse</div>
-            </div>
+    <main class="container">
+        <section class="auth-container">
+            <h2 class="section-title">Crear una Cuenta</h2>
             
-            <div class="auth-content">
-                <div class="auth-form">
-                    <h2>Crear una cuenta</h2>
-                    
-                    <form id="register-form" method="POST" action="{% url 'signup' %}">
-                        {% csrf_token %}
-                        
-                        <div class="form-group">
-                            <label for="id_username">Nombre de usuario</label>
-                            <input type="text" id="id_username" name="username" class="form-control" required>
-                            <div class="error-message" id="username-error"></div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="id_email">Correo electrónico</label>
-                            <input type="email" id="id_email" name="email" class="form-control" required>
-                            <div class="error-message" id="email-error"></div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="id_password1">Contraseña</label>
-                            <div class="password-container">
-                                <input type="password" id="id_password1" name="password1" class="form-control" required>
-                                <span class="toggle-password" onclick="togglePassword('id_password1')">👁️</span>
-                            </div>
-                            <div class="password-strength">
-                                <div class="strength-meter" id="password-strength"></div>
-                            </div>
-                            <small>La contraseña debe tener al menos 8 caracteres.</small>
-                            <div class="error-message" id="password1-error"></div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="id_password2">Confirmar contraseña</label>
-                            <div class="password-container">
-                                <input type="password" id="id_password2" name="password2" class="form-control" required>
-                                <span class="toggle-password" onclick="togglePassword('id_password2')">👁️</span>
-                            </div>
-                            <div class="error-message" id="password2-error"></div>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary">Registrarse</button>
-                        
-                        <div class="success-message" id="success-message"></div>
-                    </form>
-                    
-                    <p style="text-align: center; margin-top: 20px;">
-                        ¿Ya tienes una cuenta? <a href="{% url 'login' %}" style="color: var(--primary);">Inicia sesión</a>
-                    </p>
-                </div>
+            {% if form.errors %}
+            <div class="alert-error">
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                {% endfor %}
+                {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
             </div>
-        </div>
-    </div>
+            {% endif %}
 
+            <form id="register-form" method="POST" action="{% url 'signup' %}">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="id_username" class="form-label">Nombre de usuario</label>
+                    <input type="text" id="id_username" name="username" class="form-control" required>
+                    <div class="error-message" id="username-error"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_email" class="form-label">Correo electrónico</label>
+                    <input type="email" id="id_email" name="email" class="form-control" required>
+                    <div class="error-message" id="email-error"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_password1" class="form-label">Contraseña</label>
+                    <div class="password-container">
+                        <input type="password" id="id_password1" name="password1" class="form-control" required>
+                        <span class="toggle-password" onclick="togglePassword('id_password1')"><i class="bi bi-eye"></i></span>
+                    </div>
+                    <div class="password-strength">
+                        <div class="strength-meter" id="password-strength"></div>
+                    </div>
+                    <small class="form-text text-muted">La contraseña debe tener al menos 8 caracteres, incluyendo mayúsculas, minúsculas, números y símbolos.</small>
+                    <div class="error-message" id="password1-error"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_password2" class="form-label">Confirmar contraseña</label>
+                    <div class="password-container">
+                        <input type="password" id="id_password2" name="password2" class="form-control" required>
+                        <span class="toggle-password" onclick="togglePassword('id_password2')"><i class="bi bi-eye"></i></span>
+                    </div>
+                    <div class="error-message" id="password2-error"></div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary-custom">Registrarse</button>
+                
+                <div class="success-message" id="success-message"></div>
+            </form>
+            
+            <div class="auth-footer">
+                <p>¿Ya tienes una cuenta?</p>
+                <a href="{% url 'login' %}" class="auth-link-custom">Inicia sesión aquí</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Bootstrap Bundle con Popper -->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <script>
         // Mostrar/ocultar contraseña
         function togglePassword(inputId) {
             const input = document.getElementById(inputId);
-            input.type = input.type === 'password' ? 'text' : 'password';
+            const icon = input.nextElementSibling.querySelector('i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('bi-eye');
+                icon.classList.add('bi-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('bi-eye-slash');
+                icon.classList.add('bi-eye');
+            }
         }
 
         // Validación de contraseña en tiempo real
-        document.getElementById('id_password1').addEventListener('input', function(e) {
-            const password = e.target.value;
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('id_password1');
             const strengthMeter = document.getElementById('password-strength');
-            let strength = 0;
-            
-            // Validar longitud
-            if (password.length >= 8) strength += 1;
-            
-            // Validar caracteres especiales
-            if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) strength += 1;
-            
-            // Validar números
-            if (/\d/.test(password)) strength += 1;
-            
-            // Validar mayúsculas y minúsculas
-            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength += 1;
-            
-            // Actualizar medidor visual
-            const colors = ['#d9534f', '#f0ad4e', '#5bc0de', '#5cb85c'];
-            const width = (strength / 4) * 100;
-            strengthMeter.style.width = `${width}%`;
-            strengthMeter.style.backgroundColor = colors[strength - 1] || '#d9534f';
+            const password1Error = document.getElementById('password1-error');
+            const password2Input = document.getElementById('id_password2');
+            const password2Error = document.getElementById('password2-error');
+
+            if (passwordInput) {
+                passwordInput.addEventListener('input', updatePasswordStrength);
+                passwordInput.addEventListener('keyup', updatePasswordStrength); // También en keyup para feedback inmediato
+            }
+            if (password2Input) {
+                password2Input.addEventListener('input', validatePasswordMatch);
+                password2Input.addEventListener('keyup', validatePasswordMatch);
+            }
+
+            function updatePasswordStrength() {
+                const password = passwordInput.value;
+                let strength = 0;
+                
+                // Validar longitud
+                if (password.length >= 8) strength += 1;
+                
+                // Validar caracteres especiales
+                if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) strength += 1;
+                
+                // Validar números
+                if (/\d/.test(password)) strength += 1;
+                
+                // Validar mayúsculas y minúsculas
+                if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength += 1;
+                
+                // Actualizar medidor visual
+                const colors = ['#dc3545', '#ffc107', '#17a2b8', '#28a745']; // Rojo, Naranja, Azul, Verde
+                const width = (strength / 4) * 100;
+                strengthMeter.style.width = `${width}%`;
+                strengthMeter.style.backgroundColor = colors[strength - 1] || colors[0]; // Default a rojo si no hay fuerza
+
+                // Mostrar error de longitud si es necesario
+                if (password.length > 0 && password.length < 8) {
+                    showError(password1Error, 'La contraseña debe tener al menos 8 caracteres.');
+                    passwordInput.classList.add('error-field');
+                } else {
+                    hideError(password1Error);
+                    passwordInput.classList.remove('error-field');
+                }
+                validatePasswordMatch(); // Revalidar la coincidencia
+            }
+
+            function validatePasswordMatch() {
+                const password1 = passwordInput.value;
+                const password2 = password2Input.value;
+                if (password2.length > 0 && password1 !== password2) {
+                    showError(password2Error, 'Las contraseñas no coinciden.');
+                    password2Input.classList.add('error-field');
+                } else {
+                    hideError(password2Error);
+                    password2Input.classList.remove('error-field');
+                }
+            }
         });
 
-        // Validación del formulario
+        // Validación del formulario al enviar
         document.getElementById('register-form').addEventListener('submit', function(e) {
             let isValid = true;
             
@@ -293,59 +361,80 @@
                 el.style.display = 'none';
                 el.textContent = '';
             });
-            
             document.querySelectorAll('.form-control').forEach(el => {
                 el.classList.remove('error-field');
             });
             
             // Validar nombre de usuario
-            const username = document.getElementById('id_username').value.trim();
+            const usernameInput = document.getElementById('id_username');
+            const usernameError = document.getElementById('username-error');
+            const username = usernameInput.value.trim();
             if (username.length < 4) {
-                showError('username-error', 'El nombre de usuario debe tener al menos 4 caracteres');
+                showError(usernameError, 'El nombre de usuario debe tener al menos 4 caracteres.');
+                usernameInput.classList.add('error-field');
                 isValid = false;
             }
             
             // Validar email
-            const email = document.getElementById('id_email').value.trim();
+            const emailInput = document.getElementById('id_email');
+            const emailError = document.getElementById('email-error');
+            const email = emailInput.value.trim();
             if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                showError('email-error', 'Ingresa un correo electrónico válido');
+                showError(emailError, 'Ingresa un correo electrónico válido.');
+                emailInput.classList.add('error-field');
                 isValid = false;
             }
             
-            // Validar contraseñas
-            const password1 = document.getElementById('id_password1').value;
-            const password2 = document.getElementById('id_password2').value;
+            // Validar contraseñas (se revalidan aquí para el envío final)
+            const password1Input = document.getElementById('id_password1');
+            const password1Error = document.getElementById('password1-error');
+            const password2Input = document.getElementById('id_password2');
+            const password2Error = document.getElementById('password2-error');
+
+            const password1 = password1Input.value;
+            const password2 = password2Input.value;
             
             if (password1.length < 8) {
-                showError('password1-error', 'La contraseña debe tener al menos 8 caracteres');
+                showError(password1Error, 'La contraseña debe tener al menos 8 caracteres.');
+                password1Input.classList.add('error-field');
+                isValid = false;
+            } else if (!(/[a-z]/.test(password1) && /[A-Z]/.test(password1) && /\d/.test(password1) && /[!@#$%^&*(),.?":{}|<>]/.test(password1))) {
+                showError(password1Error, 'La contraseña debe incluir mayúsculas, minúsculas, números y símbolos.');
+                password1Input.classList.add('error-field');
                 isValid = false;
             }
             
             if (password1 !== password2) {
-                showError('password2-error', 'Las contraseñas no coinciden');
+                showError(password2Error, 'Las contraseñas no coinciden.');
+                password2Input.classList.add('error-field');
                 isValid = false;
             }
-            
+
             if (!isValid) {
-                e.preventDefault();
+                e.preventDefault(); // Detener el envío del formulario si hay errores
             }
         });
         
-        function showError(elementId, message) {
-            const element = document.getElementById(elementId);
+        function showError(element, message) {
             element.textContent = message;
             element.style.display = 'block';
-            document.getElementById(elementId.replace('-error', '')).classList.add('error-field');
         }
 
-        // Mostrar mensajes del servidor Django
+        function hideError(element) {
+            element.textContent = '';
+            element.style.display = 'none';
+        }
+
+        // Mostrar mensajes del servidor Django (para errores pasados por la URL)
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const error = urlParams.get('error');
             
             if (error) {
-                document.getElementById('error-message').textContent = error;
-                document.getElementById('error-message').style.display = 'block';
+                const errorMessageDiv = document.createElement('div');
+                errorMessageDiv.className = 'alert-error';
+                errorMessageDiv.textContent = error;
+                document.querySelector('.auth-container').prepend(errorMessageDiv);
             }
         };
     </script>

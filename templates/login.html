@@ -1,97 +1,120 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión | Bella Italia</title>
+    <title>Iniciar Sesión | Restaurante Elegante</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Bootstrap Icons CDN -->
+    <link rel="stylesheet" href="{% static 'font/bootstrap-icons.min.css' %}">
+    <!-- Inter Font -->
+    <link rel="stylesheet" href="{% static 'font/css2.css' %}">
     <style>
         :root {
-            --primary: #5cb85c;
-            --primary-hover: #4cae4c;
-            --error: #d9534f;
-            --text: #333;
-            --light-gray: #f2f2f2;
-            --border: #ccc;
+            --primary-color: #5e3a1f;
+            --secondary-color: #c8a97e;
+            --accent-color: #e8c284;
+            --light-bg: #f9f5f0;
+            --dark-text: #2a2118;
+            --light-text: #f8f9fa;
+            --error-color: #dc3545; /* Rojo para errores */
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: var(--light-gray);
-            margin: 0;
-            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light-bg);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-        }
-
-        .login-container {
-            width: 100%;
-            max-width: 400px;
             padding: 2rem;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
-        .login-header {
+        .auth-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 3rem;
+            width: 100%;
+            max-width: 450px; /* Ajustado para formularios de autenticación */
             text-align: center;
+        }
+
+        .section-title {
+            position: relative;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem; /* Menos margen para subtítulo */
+            text-align: center;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--secondary-color);
+            margin: 15px auto 2.5rem auto; /* Ajustado para subtítulo */
+        }
+
+        .auth-subtitle {
+            color: var(--dark-text);
             margin-bottom: 2rem;
+            font-size: 1.1rem;
         }
-
-        .login-header h2 {
-            color: var(--text);
-            margin-bottom: 0.5rem;
-        }
-
+        
         .form-group {
             margin-bottom: 1.5rem;
+            text-align: left; /* Alinea etiquetas a la izquierda */
         }
-
-        .form-group label {
+        
+        .form-label {
             display: block;
-            margin-bottom: 0.5rem;
             font-weight: 600;
-            color: var(--text);
+            margin-bottom: 0.8rem;
+            color: var(--dark-text);
         }
-
+        
         .form-control {
+            border-radius: 8px;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
             width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border);
-            border-radius: 5px;
-            font-size: 16px;
-            transition: border 0.3s;
+            transition: all 0.3s ease;
         }
-
+        
         .form-control:focus {
-            border-color: var(--primary);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(92, 184, 92, 0.2);
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 0.25rem rgba(200, 169, 126, 0.25);
         }
-
-        .btn {
-            width: 100%;
-            padding: 12px;
-            background-color: var(--primary);
-            color: white;
+        
+        .btn-primary-custom {
+            background-color: var(--primary-color);
             border: none;
-            border-radius: 5px;
-            font-size: 16px;
+            border-radius: 50px;
+            padding: 12px 30px;
             font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s;
+            letter-spacing: 0.5px;
+            color: var(--light-text);
+            transition: all 0.3s ease;
+            width: 100%; /* Ocupa todo el ancho */
+            margin-top: 1rem; /* Espacio superior */
         }
-
-        .btn:hover {
-            background-color: var(--primary-hover);
+        
+        .btn-primary-custom:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            color: var(--dark-text);
         }
 
         .auth-footer {
-            margin-top: 2rem;
-            text-align: center;
-            border-top: 1px solid var(--border);
+            margin-top: 2.5rem;
             padding-top: 1.5rem;
+            border-top: 1px solid #eee;
         }
 
         .auth-footer p {
@@ -99,79 +122,85 @@
             margin-bottom: 1rem;
         }
 
-        .auth-link {
+        .auth-link-custom {
             display: inline-block;
             padding: 10px 20px;
-            background-color: #f8f9fa;
-            color: var(--primary);
-            border: 1px solid var(--primary);
-            border-radius: 5px;
+            background-color: var(--accent-color);
+            color: var(--dark-text);
+            border: 1px solid var(--secondary-color);
+            border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
         }
 
-        .auth-link:hover {
-            background-color: var(--primary);
-            color: white;
+        .auth-link-custom:hover {
+            background-color: var(--secondary-color);
+            color: var(--light-text);
+            transform: translateY(-2px);
         }
 
         /* Mensajes de error */
-        .alert {
-            padding: 12px;
-            border-radius: 5px;
+        .alert-error {
+            background-color: #f8d7da; /* Fondo rojo claro */
+            color: var(--error-color); /* Texto rojo oscuro */
+            border: 1px solid #f5c6cb; /* Borde rojo */
+            padding: 1rem;
+            border-radius: 8px;
             margin-bottom: 1.5rem;
+            font-size: 0.95rem;
             text-align: center;
         }
 
-        .alert-error {
-            background-color: #f8d7da;
-            color: var(--error);
-            border: 1px solid #f5c6cb;
-        }
-
-        /* Responsive */
-        @media (max-width: 480px) {
-            .login-container {
-                margin: 1rem;
-                padding: 1.5rem;
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+                align-items: flex-start;
+            }
+            .auth-container {
+                padding: 2rem;
+            }
+            .section-title {
+                font-size: 2rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="login-header">
-            <h2>Iniciar Sesión</h2>
-            <p>Bienvenido de vuelta a Bella Italia</p>
-        </div>
+    <main class="container">
+        <section class="auth-container">
+            <h2 class="section-title">Iniciar Sesión</h2>
+            <p class="auth-subtitle">Bienvenido de vuelta a Bella Italia</p>
 
-        {% if form.errors %}
-        <div class="alert alert-error">
-            Usuario o contraseña incorrectos. Por favor intente nuevamente.
-        </div>
-        {% endif %}
-
-        <form method="POST" action="{% url 'login' %}">
-            {% csrf_token %}
-            
-            <div class="form-group">
-                <label for="id_username">Usuario</label>
-                <input type="text" name="username" id="id_username" class="form-control" required autofocus>
+            {% if form.errors %}
+            <div class="alert-error">
+                Usuario o contraseña incorrectos. Por favor intente nuevamente.
             </div>
-            
-            <div class="form-group">
-                <label for="id_password">Contraseña</label>
-                <input type="password" name="password" id="id_password" class="form-control" required>
-            </div>
-            
-            <button type="submit" class="btn">Entrar</button>
-        </form>
+            {% endif %}
 
-        <div class="auth-footer">
-            <p>¿No tienes una cuenta?</p>
-            <a href="{% url 'signup' %}" class="auth-link">Regístrate aquí</a>
-        </div>
-    </div>
+            <form method="POST" action="{% url 'login' %}">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="id_username" class="form-label">Usuario</label>
+                    <input type="text" name="username" id="id_username" class="form-control" required autofocus>
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_password" class="form-label">Contraseña</label>
+                    <input type="password" name="password" id="id_password" class="form-control" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary-custom">Entrar</button>
+            </form>
+
+            <div class="auth-footer">
+                <p>¿No tienes una cuenta?</p>
+                <a href="{% url 'signup' %}" class="auth-link-custom">Regístrate aquí</a>
+            </div>
+        </section>
+    </main>
+    <!-- Bootstrap Bundle con Popper -->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>
