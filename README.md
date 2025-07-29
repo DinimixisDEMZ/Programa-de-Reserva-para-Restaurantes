@@ -1,4 +1,7 @@
 # Programa de Reserva para Restaurantes
+
+<img width="538" height="147" alt="image" src="https://github.com/user-attachments/assets/f3e0f57f-797a-43cc-b785-3dcc3ade8fcc" />
+
 ## Programa de reserva para restaurantes empleando Django y Bootstrap.
 
 Bienvenido equipo a nuestro repositorio de desarrollo temporal.
