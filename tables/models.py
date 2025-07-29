@@ -5,9 +5,10 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class TableStatus(models.IntegerChoices):
-    OCCUPIED = 0, 'Ocupada'
-    FREE = 1, 'Libre'
-    RESERVED = 2, 'Reservada'
+    FREE = 0, 'Libre'
+    RESERVED = 1, 'Reservada' # Corregido: de 'Reservf' a 'Reservada'
+    OCCUPIED = 2, 'Ocupada'
+    OUT_OF_SERVICE = 3, 'Fuera de Servicio'
 
 class Table(models.Model):
     location = models.CharField(max_length=200, help_text='Ubicación de la mesa (ex:Terraza)')
@@ -15,4 +16,4 @@ class Table(models.Model):
     status = models.IntegerField(choices=TableStatus.choices, default=TableStatus.FREE, help_text='Estado actual de la mesa (ex:Ocupada)')
     
     def __str__(self):
-        return 'ID:{} Number of chairs:{} Status:{}'.format(self.pk, self.number_of_chairs, self.status)
+        return 'Número: {} Número de Sillas: {} Disponibilidad: {}'.format(self.pk, self.number_of_chairs, self.get_status_display())
